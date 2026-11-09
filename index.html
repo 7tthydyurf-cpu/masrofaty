@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>مصاريفي</title>
+<script>(function(){var d=document.documentElement,s={},lk=false;try{s=JSON.parse(localStorage.getItem("masrofaty-settings-v1")||"{}")||{};lk=!!localStorage.getItem("masrofaty-lock-v1")}catch(e){}if(lk)d.setAttribute("data-locked","1");if(s.lang==="en"){d.lang="en";d.dir="ltr"}var t=(s.theme==="light"||s.theme==="dark")?s.theme:((window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches)?"dark":"light");d.setAttribute("data-theme",t)})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #F4F5FB;
+    --surface: #FFFFFF;
+    --ink: #1B1F3B;
+    --muted: #8087A3;
+    --line: #E6E8F2;
+    --field: #F3F4FA;
+    --hero: #2B2D8E;
+    --hero-ink: #FFFFFF;
+    --hero-track: rgba(255,255,255,.16);
+    --btn: #2B2D8E;
+    --btn-ink: #FFFFFF;
+    --bad: #E5384C;
+    --good: #1E9E63;
+    --focus: #4B4FE0;
+    --teal: #0F9D8E;
+    --shadow: 0 8px 24px rgba(33, 40, 120, .08);
+    --nav-bg: #ECEBFA;
+    --nav-ink: #A4A7CB;
+    --nav-active: #1F2A7A;
+    --nav-active-bg: rgba(255,255,255,.8);
+    --nav-shadow: 0 10px 30px rgba(30, 40, 140, .2);
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+      --bg: #0C0F24;
+      --surface: #161A38;
+      --ink: #EEF0FB;
+      --muted: #9298B8;
+      --line: #262B52;
+      --field: #1D2245;
+      --hero: #2B2D8E;
+      --btn: #8B8DFF;
+      --btn-ink: #0C0F24;
+      --bad: #FF6B7E;
+      --good: #3DD598;
+      --focus: #9FA1FF;
+      --teal: #2CC6B4;
+      --shadow: 0 8px 24px rgba(0, 0, 0, .35);
+      --nav-bg: #1C2148;
+      --nav-ink: #7E83B5;
+      --nav-active: #FFFFFF;
+      --nav-active-bg: rgba(255,255,255,.12);
+      --nav-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  [hidden] { display: none !important; }
+  html { background: var(--bg); }
+  body {
+    font-family: "Tajawal", "Segoe UI", Tahoma, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 16px;
+    min-height: 100vh;
+    padding: max(14px, env(safe-area-inset-top)) 14px calc(112px + env(safe-area-inset-bottom));
+  }
+  .app { max-width: 480px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .app > * { min-width: 0; }
+  .view { display: grid; gap: 14px; min-width: 0; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .note-bar { background: var(--field); color: var(--muted); border-radius: 14px; padding: 10px 14px; font-size: 14px; }
+
+  /* ---------- الهيدر ---------- */
+  .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .logo {
+    width: 42px; height: 42px; border-radius: 13px; flex: none;
+    background: linear-gradient(135deg, #2A2C8C, #4B3FC0); color: #fff;
+    display: grid; place-items: center; box-shadow: 0 6px 14px rgba(42, 44, 140, .3);
+  }
+  .logo svg { width: 22px; height: 22px; }
+  .brand h1 { font-size: 22px; font-weight: 800; }
+  .hello { text-align: center; line-height: 1.3; flex: none; }
+  .hello b { display: block; font-size: 17px; font-weight: 700; }
+  .hello span { color: var(--muted); font-size: 14px; }
+
+  .monthbar { display: flex; align-items: center; justify-content: center; gap: 14px; }
+  .monthbar span { font-size: 16px; font-weight: 700; min-width: 130px; text-align: center; }
+  .mb-btn {
+    width: 38px; height: 38px; border-radius: 50%; border: 0;
+    background: var(--surface); color: var(--ink); box-shadow: var(--shadow);
+    display: grid; place-items: center;
+  }
+  .mb-btn:disabled { opacity: .35; cursor: default; }
+  .mb-btn svg { width: 18px; height: 18px; }
+
+  /* ---------- كارت الرصيد ---------- */
+  .balance {
+    background: linear-gradient(135deg, #2A2C8C 0%, #3C2F9E 100%);
+    color: #fff; border-radius: 28px; padding: 20px 18px 18px;
+    box-shadow: 0 14px 30px rgba(42, 44, 140, .3);
+  }
+  .bal-label { font-size: 16px; opacity: .92; display: flex; align-items: center; gap: 8px; }
+  .bal-num {
+    font-size: 44px; font-weight: 800; line-height: 1.15; margin: 10px 0 16px;
+    font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+  }
+  .bal-num.long { font-size: 30px; }
+  .bal-num .cur { font-size: 18px; margin-inline-start: 8px; }
+  .bal-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; cursor: pointer; }
+  .bal-tile { background: rgba(255,255,255,.14); border-radius: 20px; padding: 12px 14px; min-width: 0; }
+  .t-l { font-size: 14px; opacity: .9; display: flex; align-items: center; gap: 6px; }
+  .t-l svg { width: 18px; height: 18px; flex: none; }
+  .bal-tile b {
+    display: block; margin-top: 4px; font-size: 20px; font-weight: 800;
+    font-variant-numeric: tabular-nums; overflow-wrap: anywhere;
+  }
+  .bal-tile b.over { color: #FFB3BC; }
+  .cur { font-size: 12px; font-weight: 500; opacity: .75; margin-inline-start: 4px; }
+
+  /* ---------- عناوين الأقسام ---------- */
+  .sec-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .sec { font-size: 16px; font-weight: 700; color: var(--muted); }
+  .list-sum { font-weight: 800; font-size: 15px; font-variant-numeric: tabular-nums; }
+
+  /* ---------- إحصائيات سريعة ---------- */
+  .quick { display: flex; gap: 14px; overflow-x: auto; padding: 4px 2px 8px; scrollbar-width: none; }
+  .quick::-webkit-scrollbar { display: none; }
+  .q-item { flex: none; min-width: 68px; display: grid; justify-items: center; gap: 4px; text-align: center; }
+  .q-item.zero { opacity: .55; }
+  .q-ic {
+    width: 66px; height: 66px; border-radius: 22px; font-size: 30px;
+    display: grid; place-items: center; box-shadow: var(--shadow);
+  }
+  .q-item b { font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .q-item small { color: var(--muted); font-size: 12px; white-space: nowrap; max-width: 84px; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ---------- الفلتر ---------- */
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+  .flt {
+    border: 1.5px solid var(--muted); background: transparent; color: var(--ink);
+    border-radius: 99px; padding: 7px 20px; font-size: 15px; font-weight: 500;
+  }
+  .flt[aria-pressed="true"] { background: var(--nav-active); border-color: var(--nav-active); color: #fff; font-weight: 700; }
+  :root[data-theme="dark"] .flt[aria-pressed="true"] { background: var(--btn); border-color: var(--btn); color: var(--btn-ink); }
+
+  /* ---------- المعاملات ---------- */
+  .tx-list { display: grid; gap: 12px; }
+  .tx {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center;
+    column-gap: 12px; background: var(--surface); border-radius: 22px;
+    padding: 12px 14px; box-shadow: var(--shadow);
+  }
+  .tx-ic { width: 52px; height: 52px; border-radius: 17px; font-size: 26px; display: grid; place-items: center; }
+  .tx-main { min-width: 0; }
+  .tx-main b { display: block; font-weight: 700; }
+  .tx-main span { display: block; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+  .tx-amt { color: var(--bad); font-weight: 800; font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .del {
+    width: 38px; height: 38px; border-radius: 12px; border: 0; background: transparent;
+    color: var(--muted); display: grid; place-items: center;
+  }
+  .del:hover, .del:active { background: var(--field); color: var(--bad); }
+  .del svg { width: 19px; height: 19px; }
+  .empty { text-align: center; color: var(--muted); padding: 22px 8px; background: var(--surface); border-radius: 22px; box-shadow: var(--shadow); }
+
+  /* ---------- كروت عامة ---------- */
+  .card { background: var(--surface); border-radius: 26px; padding: 18px; box-shadow: var(--shadow); min-width: 0; }
+  .card h2 { font-size: 17px; font-weight: 800; margin-bottom: 12px; }
+
+  /* ---------- التقارير ---------- */
+  .stack { display: flex; height: 12px; border-radius: 99px; overflow: hidden; background: var(--field); margin: 2px 0 14px; gap: 2px; }
+  .stack i { display: block; height: 100%; min-width: 0; }
+  .cats { list-style: none; display: grid; gap: 14px; }
+  .cat-row { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 12px; }
+  .cat-row.zero { opacity: .5; }
+  .cr-ic { width: 44px; height: 44px; border-radius: 15px; font-size: 22px; display: grid; place-items: center; }
+  .cr-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .cat-name { font-weight: 700; overflow-wrap: anywhere; }
+  .cat-amt { font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cat-amt small { color: var(--muted); font-weight: 500; margin-inline-start: 6px; font-size: 12px; }
+  .cr-bar { display: block; height: 7px; border-radius: 99px; background: var(--field); overflow: hidden; margin-top: 6px; }
+  .cr-bar i { display: block; height: 100%; border-radius: 99px; }
+  .rep-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .rep-ttl { min-width: 0; }
+  .rep-ttl h2 { font-size: 22px; font-weight: 800; line-height: 1.2; }
+  .rep-ttl span { display: block; color: var(--muted); font-size: 14px; }
+  .round-btn {
+    flex: none; width: 42px; height: 42px; border-radius: 50%; border: 0;
+    background: var(--surface); color: var(--teal); box-shadow: var(--shadow);
+    display: grid; place-items: center;
+  }
+  .round-btn svg { width: 21px; height: 21px; }
+  .round-btn:active { transform: scale(.94); }
+  .round-btn:disabled { opacity: .5; }
+  .share-wide {
+    border: 0; border-radius: 20px; background: var(--btn); color: var(--btn-ink);
+    padding: 15px; font-size: 17px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    box-shadow: 0 10px 22px rgba(43, 45, 142, .28);
+  }
+  .share-wide svg { width: 21px; height: 21px; }
+
+  /* ---------- الإعدادات ---------- */
+  html[dir="ltr"] body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  html[dir="ltr"] .mb-btn svg, html[dir="ltr"] .set-row .chev { transform: scaleX(-1); }
+  html[dir="ltr"] .flt { padding-left: 14px; padding-right: 14px; }
+  html[dir="ltr"] .filters { gap: 6px; }
+  .about-head { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .about-head h3 { margin: 0; }
+  .about-head span.ver { color: var(--muted); font-size: 14px; }
+  .about-list { list-style: disc; padding-inline-start: 22px; display: grid; gap: 6px; margin: 4px 0 12px; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    border: 1.5px solid var(--line); background: var(--surface); border-radius: 99px;
+    padding: 8px 18px; font-size: 15px; font-weight: 500;
+  }
+  .pill[aria-pressed="true"] { background: var(--btn); color: var(--btn-ink); border-color: var(--btn); font-weight: 700; }
+  .set-row {
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: 12px;
+    width: 100%; border: 0; background: var(--surface); border-radius: 22px;
+    padding: 14px 16px; box-shadow: var(--shadow); text-align: start;
+  }
+  a.set-row { color: inherit; text-decoration: none; }
+  #updState.hot { color: var(--good); font-weight: 700; }
+  #updDlg .link-btn { margin-top: 10px; }
+  #updDlg .add-btn { margin-top: 12px; }
+  .set-ic { width: 46px; height: 46px; border-radius: 15px; background: var(--field); font-size: 22px; display: grid; place-items: center; }
+  .set-row b { display: block; font-weight: 700; }
+  .set-row small { color: var(--muted); font-size: 13px; }
+  .set-row.on small { color: var(--good); font-weight: 700; }
+  .set-row .chev { width: 18px; height: 18px; color: var(--muted); }
+
+  /* ---------- الإضافة ---------- */
+  #amount {
+    width: 100%; border: 2px solid var(--line); background: var(--field);
+    border-radius: 18px; padding: 14px 16px;
+    font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: start;
+  }
+  #amount::placeholder { color: var(--muted); font-weight: 500; font-size: 20px; }
+  #amount:focus { border-color: var(--focus); outline: none; }
+  #amount.bad { border-color: var(--bad); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; border: 0; min-width: 0; }
+  .chips legend { font-size: 14px; color: var(--muted); margin-bottom: 8px; padding: 0; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+  .chip span {
+    display: flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 99px;
+    font-weight: 500; background: var(--field); border: 2px solid transparent;
+  }
+  .chip input:checked + span { border-color: var(--c); background: var(--surface); font-weight: 700; }
+  .chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .chip-input {
+    flex: 1 1 130px; min-width: 0; border: 2px dashed var(--line); background: var(--field);
+    border-radius: 99px; padding: 10px 14px; font-size: 16px; font-weight: 500;
+  }
+  .chip-input:focus { border-color: var(--focus); border-style: solid; outline: none; }
+  .chip-input:not(:placeholder-shown) { border-color: var(--focus); border-style: solid; background: var(--surface); font-weight: 700; }
+
+  .row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 150px); gap: 10px; }
+  .field {
+    width: 100%; border: 2px solid var(--line); background: var(--field);
+    border-radius: 16px; padding: 12px 14px; font-size: 16px; min-width: 0;
+  }
+  .field:focus { border-color: var(--focus); outline: none; }
+  input[type="date"].field { text-align: start; }
+  .add-btn {
+    width: 100%; margin-top: 14px; border: 0; border-radius: 18px;
+    background: var(--btn); color: var(--btn-ink);
+    padding: 15px; font-size: 18px; font-weight: 700;
+    box-shadow: 0 10px 22px rgba(43, 45, 142, .25);
+  }
+  .add-btn:active { transform: scale(.985); }
+  .err { color: var(--bad); font-size: 14px; min-height: 20px; margin-top: 8px; }
+  .err.ok { color: var(--good); }
+
+  /* ---------- الميزانية ---------- */
+  .b-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .card .b-head h2 { margin: 0; }
+  .link-btn { border: 0; background: var(--field); border-radius: 99px; padding: 6px 14px; font-size: 14px; font-weight: 500; }
+  .b-left-label { color: var(--muted); font-size: 14px; }
+  .b-left { font-size: 32px; font-weight: 800; line-height: 1.2; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+  .b-left .cur { font-size: 16px; }
+  .b-left.over { color: var(--bad); }
+  .meter { position: relative; height: 16px; border-radius: 99px; overflow: hidden; background: var(--field); margin: 12px 0 8px; }
+  .meter i { display: block; height: 100%; width: 0; border-radius: 99px; background: var(--good); }
+  .meter.hot i { background: var(--bad); }
+  .meter::after { content: ""; position: absolute; top: 0; bottom: 0; inset-inline-start: 80%; width: 2px; background: var(--surface); opacity: .9; }
+  .b-meta { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .b-warn { color: var(--bad); font-size: 14px; font-weight: 700; min-height: 20px; margin-top: 6px; }
+  .b-hint { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
+  .b-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+  .btn-sm { border: 0; border-radius: 14px; background: var(--btn); color: var(--btn-ink); padding: 0 22px; font-weight: 700; font-size: 16px; }
+  .b-actions { display: flex; gap: 8px; margin-top: 10px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .meter i { transition: width .35s ease, background-color .25s ease; }
+    .stack i { transition: width .35s ease; }
+  }
+
+  /* ---------- شريط التنقل ---------- */
+  .tabbar {
+    position: fixed; z-index: 40; left: 14px; right: 14px; margin: 0 auto; max-width: 452px;
+    bottom: max(14px, env(safe-area-inset-bottom));
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 8px;
+    background: var(--nav-bg); border-radius: 30px; box-shadow: var(--nav-shadow);
+  }
+  .tab {
+    border: 0; background: transparent; color: var(--nav-ink); border-radius: 22px;
+    display: grid; justify-items: center; gap: 3px; padding: 9px 2px 7px;
+    font-size: 11px; font-weight: 500; min-width: 0;
+  }
+  .tab svg { width: 24px; height: 24px; }
+  .tab span { white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+  .tab.active { background: var(--nav-active-bg); color: var(--nav-active); font-weight: 700; }
+  .tab[data-tab="home"].active svg path { fill: currentColor; }
+
+  /* ---------- نوافذ وتنبيهات ---------- */
+  .toast {
+    position: fixed; left: 14px; right: 14px; margin: 0 auto; width: fit-content; max-width: 420px;
+    bottom: calc(100px + env(safe-area-inset-bottom));
+    background: var(--ink); color: var(--bg);
+    padding: 12px 18px; border-radius: 16px; font-size: 15px; text-align: center;
+    opacity: 0; transform: translateY(8px); pointer-events: none; z-index: 60;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+  .toast.on { opacity: 1; transform: none; }
+  .sheet { position: fixed; inset: 0; z-index: 50; }
+  .sheet-back { position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+  .sheet-box {
+    position: absolute; left: 0; right: 0; bottom: 0; margin: 0 auto; max-width: 480px;
+    background: var(--surface); color: var(--ink); max-height: 90vh; overflow-y: auto;
+    border-radius: 26px 26px 0 0; padding: 18px 16px max(18px, env(safe-area-inset-bottom));
+  }
+  .sheet-box h3 { font-size: 17px; font-weight: 700; margin-bottom: 12px; }
+  .sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sheet-grid a, .sheet-grid button {
+    display: flex; align-items: center; justify-content: center; padding: 14px 10px;
+    border-radius: 16px; border: 0; background: var(--field); color: var(--ink);
+    text-decoration: none; font-weight: 700; font-size: 16px;
+  }
+  .stack-fields { display: grid; gap: 10px; }
+  .btn-sm.full { width: 100%; min-height: 48px; padding: 0 16px; }
+  .lk-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .lk-row b { display: block; }
+  .lk-row span { display: block; color: var(--muted); font-size: 13px; }
+  .lk-row select.field { width: auto; max-width: 170px; padding: 8px 10px; }
+  #lockDlg details { border-top: 1px solid var(--line); padding: 12px 0; }
+  #lockDlg summary { font-weight: 700; cursor: pointer; }
+  #lockDlg details form { display: grid; gap: 10px; margin-top: 12px; }
+  .txt-area {
+    width: 100%; min-height: 150px; resize: vertical; margin: 8px 0 12px;
+    font-family: ui-monospace, Menlo, Consolas, "Courier New", monospace; font-size: 13px; line-height: 1.45;
+    direction: ltr; text-align: left;
+  }
+  .img-list { max-height: 58vh; overflow-y: auto; margin: 8px 0 12px; }
+  .img-list img { width: 100%; height: auto; display: block; border-radius: 14px; margin-bottom: 10px; border: 1px solid var(--line); }
+  .rec-code {
+    font-family: ui-monospace, Menlo, Consolas, "Courier New", monospace; direction: ltr;
+    font-size: 26px; font-weight: 800; letter-spacing: 2px; text-align: center;
+    background: var(--field); border-radius: 16px; padding: 16px 10px; margin: 10px 0 12px;
+    user-select: all; -webkit-user-select: all; overflow-wrap: anywhere;
+  }
+  .rec-wait { border-top: 1px solid var(--line); padding-top: 10px; display: grid; gap: 6px; justify-items: center; }
+  .rec-wait .b-hint { margin: 0; }
+  .add-btn:disabled { opacity: .45; }
+  .data-card { padding-bottom: 6px; }
+  .data-list { display: grid; margin-top: 2px; }
+  .data-row {
+    display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: center; column-gap: 16px;
+    width: 100%; text-align: start; background: transparent; border: 0;
+    border-top: 1px solid var(--line); padding: 15px 2px; border-radius: 0;
+  }
+  .data-row:first-child { border-top: 0; }
+  .data-row:active { background: var(--field); }
+  .data-ic { width: 28px; height: 28px; color: var(--teal); fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .data-row b { display: block; font-weight: 700; font-size: 17px; }
+  .data-row small { display: block; color: var(--muted); font-size: 14px; margin-top: 1px; }
+  #lockDlg .sheet-grid { margin: 10px 0 4px; }
+  #lockDlg .link-btn { margin-top: 10px; }
+
+  /* قفل التطبيق */
+  html[data-locked] main.app,
+  html[data-locked] .sheet,
+  html[data-locked] .tabbar,
+  html[data-locked] .toast { visibility: hidden; }
+  .lock-screen {
+    position: fixed; inset: 0; z-index: 100; background: var(--bg);
+    display: none; align-items: center; justify-content: center; padding: 20px; overflow-y: auto;
+  }
+  html[data-locked] .lock-screen { display: flex; }
+  .lock-card {
+    width: 100%; max-width: 380px; background: var(--surface); border-radius: 26px; padding: 26px 20px;
+    text-align: center; display: grid; gap: 12px; min-width: 0; box-shadow: var(--shadow);
+  }
+  .lock-ic { width: 58px; height: 58px; margin: 0 auto; border-radius: 50%; background: var(--hero); color: #fff; display: grid; place-items: center; }
+  .lock-ic svg { width: 28px; height: 28px; }
+  .lock-card h2 { font-size: 20px; font-weight: 800; }
+  .lock-in { text-align: center; font-size: 18px; }
+  .lock-card .add-btn { margin-top: 0; }
+  .bio-btn {
+    border: 2px solid var(--line); background: var(--field); border-radius: 16px; padding: 13px;
+    font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .bio-btn svg { width: 22px; height: 22px; }
+  .bio-btn[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main class="app">
+
+  <div class="note-bar" id="storageNote" hidden>
+    الحفظ مش شغال في العرض ده. نزّل الملف وافتحه من جهازك عشان اللي بتكتبه يفضل محفوظ.
+  </div>
+
+  <header class="top">
+    <div class="brand">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h14a1 1 0 001-1v-9a1 1 0 00-1-1H5a2 2 0 01-2-2z"/><circle cx="16" cy="14" r="1.2" fill="currentColor"/></svg></span>
+      <h1>مصاريفي</h1>
+    </div>
+    <div class="hello"><b>مرحبا 👋</b><span id="todayLbl"></span></div>
+  </header>
+
+  <div class="monthbar" id="monthbar">
+    <button type="button" class="mb-btn" id="prevBtn" aria-label="الشهر اللي قبله"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <span id="monthTitle"></span>
+    <button type="button" class="mb-btn" id="nextBtn" aria-label="الشهر اللي بعده"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </div>
+
+  <!-- الرئيسية -->
+  <section class="view" data-view="home">
+    <div class="balance" aria-label="ملخص الشهر">
+      <div class="bal-label"><span>مجموع الشهر</span><span aria-hidden="true">💰</span></div>
+      <div class="bal-num" id="totalNum">0</div>
+      <div class="bal-tiles" id="balTiles">
+        <div class="bal-tile"><div class="t-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/></svg><span>الميزانية</span></div><b id="heroBudget">—</b></div>
+        <div class="bal-tile"><div class="t-l"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l5-5 4 4 7-8"/><path d="M15 8h5v5"/></svg><span id="heroLeftLbl">فاضل</span></div><b id="heroLeft">—</b></div>
+      </div>
+    </div>
+
+    <h2 class="sec">إحصائيات سريعة</h2>
+    <div class="quick" id="quick"></div>
+
+    <div class="sec-row">
+      <h2 class="sec">المعاملات</h2>
+      <span class="list-sum" id="listSum"></span>
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="عرض المعاملات">
+      <button type="button" class="flt" data-mode="all" aria-pressed="false">الكل</button>
+      <button type="button" class="flt" data-mode="month" aria-pressed="true">شهري</button>
+      <button type="button" class="flt" data-mode="week" aria-pressed="false">أسبوعي</button>
+      <button type="button" class="flt" data-mode="day" aria-pressed="false">يومي</button>
+    </div>
+    <div class="tx-list" id="list"></div>
+  </section>
+
+  <!-- الميزانية -->
+  <div class="view" data-view="budget" hidden>
+  <!-- الميزانية -->
+  <section class="card" aria-label="الميزانية">
+    <div class="b-head">
+      <h2>ميزانية الشهر</h2>
+      <button type="button" class="link-btn" id="budgetEdit" hidden>تعديل</button>
+    </div>
+
+    <div id="budgetShow" hidden>
+      <div class="b-left-label" id="bLabel"></div>
+      <div class="b-left" id="bLeft"></div>
+      <div class="meter" id="meter" role="progressbar" aria-label="المصروف من الميزانية" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="meterFill"></i></div>
+      <div class="b-meta"><span id="bSpent"></span><span id="bPct"></span></div>
+      <div class="b-warn" id="bWarn"></div>
+    </div>
+
+    <form id="budgetForm" autocomplete="off" novalidate hidden>
+      <p class="b-hint">اكتب ميزانيتك الشهرية مرة واحدة، وهتتطبق على كل الشهور.</p>
+      <div class="b-form">
+        <input class="field" id="budgetInput" type="text" inputmode="decimal" placeholder="الميزانية" aria-label="الميزانية">
+        <button class="btn-sm" type="submit">حفظ</button>
+      </div>
+      <div class="err" id="bErr" role="alert"></div>
+      <div class="b-actions">
+        <button type="button" class="link-btn" id="budgetCancel" hidden>إلغاء</button>
+        <button type="button" class="link-btn" id="budgetClear" hidden>مسح الميزانية</button>
+      </div>
+    </form>
+  </section>
+
+  </div>
+
+  <!-- إضافة -->
+  <div class="view" data-view="add" hidden>
+  <!-- إضافة مصروف -->
+  <section class="card" aria-label="إضافة مصروف">
+    <h2>مصروف جديد</h2>
+    <form id="form" autocomplete="off" novalidate>
+      <div class="amount-wrap">
+        <input id="amount" type="text" inputmode="decimal" placeholder="المبلغ" aria-label="المبلغ">
+      </div>
+
+      <fieldset class="chips" id="chips">
+        <legend>النوع</legend>
+        <input class="chip-input" id="customCat" type="text" maxlength="20" placeholder="+ نوع تاني" aria-label="اكتب نوع تاني">
+      </fieldset>
+
+      <div class="row2">
+        <input class="field" id="note" type="text" maxlength="80" placeholder="ملاحظة (اختياري)" aria-label="ملاحظة">
+        <input class="field" id="date" type="date" aria-label="التاريخ">
+      </div>
+
+      <div class="err" id="err" role="alert"></div>
+      <button class="add-btn" type="submit">أضف المصروف</button>
+    </form>
+  </section>
+
+  </div>
+
+  <!-- التقارير -->
+  <section class="view" data-view="reports" hidden>
+    <div class="rep-top">
+      <div class="rep-ttl"><h2>التقارير</h2><span id="repMonth"></span></div>
+      <button type="button" class="round-btn" id="pdfBtn" aria-label="تنزيل تقرير PDF" title="تنزيل تقرير PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/></svg>
+      </button>
+    </div>
+    <div class="card">
+      <h2>حسب النوع</h2>
+      <div class="stack" id="stack" aria-hidden="true"></div>
+      <ul class="cats" id="cats"></ul>
+    </div>
+    <button type="button" class="share-wide" id="shareBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-4M8.6 13.5l6.8 4"/></svg><span>شارك تقرير الشهر</span></button>
+  </section>
+
+  <!-- الإعدادات -->
+  <section class="view" data-view="settings" hidden>
+    <div class="card">
+      <h2>العملة</h2>
+      <div class="pills" id="pills" role="group" aria-label="اختار العملة"></div>
+    </div>
+    <div class="card">
+      <h2>اللغة</h2>
+      <div class="pills" id="langPills" role="group" aria-label="لغة التطبيق"></div>
+    </div>
+    <div class="card">
+      <h2>المظهر</h2>
+      <div class="pills" id="themePills" role="group" aria-label="مظهر التطبيق"></div>
+    </div>
+    <div class="card data-card">
+      <h2>البيانات</h2>
+      <div class="data-list">
+        <button type="button" class="data-row" id="dxJson"><svg class="data-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5"/><path d="M12 17v-6M9.5 13.5L12 11l2.5 2.5"/></svg><span><b>تصدير إلى ملف JSON</b><small>حفظ نسخة احتياطية من مصاريفك في ملف</small></span></button>
+        <button type="button" class="data-row" id="dxImport"><svg class="data-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg><span><b>استيراد من ملف JSON</b><small>استعادة المصاريف من ملف JSON</small></span></button>
+        <button type="button" class="data-row" id="dxDriveUp"><svg class="data-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 01-.5-7.97A5.5 5.5 0 0117.4 8.6 4.5 4.5 0 0117.5 18H7z"/><path d="M12 15v-5M9.8 12l2.2-2.2 2.2 2.2"/></svg><span><b>رفع إلى Google Drive</b><small>إرسال نسخة احتياطية إلى حسابك على Drive</small></span></button>
+        <button type="button" class="data-row" id="dxDriveDown"><svg class="data-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4 4 0 01-.5-7.97A5.5 5.5 0 0117.4 8.6 4.5 4.5 0 0117.5 18H7z"/><path d="M12 10v5M9.8 13l2.2 2.2 2.2-2.2"/></svg><span><b>استيراد من Google Drive</b><small>اختيار ملف النسخة الاحتياطية من Drive</small></span></button>
+      </div>
+    </div>
+    <button type="button" class="set-row" id="lockBtn">
+      <span class="set-ic" aria-hidden="true">🔒</span>
+      <span><b>قفل التطبيق</b><small id="lockStatus"></small></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <button type="button" class="set-row" id="updBtn">
+      <span class="set-ic" aria-hidden="true">🔄</span>
+      <span><b>التحديثات</b><small id="updState"></small></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <button type="button" class="set-row" id="aboutBtn">
+      <span class="set-ic" aria-hidden="true">ℹ️</span>
+      <span><b>حول التطبيق</b><small id="aboutRowVer"></small></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M15 6l-6 6 6 6"/></svg>
+    </button>
+    <a class="set-row" id="offersLink" href="https://asiafilm.org/4/37e84bfa8db6a5c142dee41924315d96" target="_blank" rel="noopener noreferrer">
+      <span class="set-ic" aria-hidden="true">🎁</span>
+      <span><b>عروض ومكافآت</b></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M15 6l-6 6 6 6"/></svg>
+    </a>
+  </section>
+
+</main>
+
+<nav class="tabbar" id="tabbar" aria-label="التنقل">
+  <button type="button" class="tab active" data-tab="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11L12 3.5 20.5 11V19a1.5 1.5 0 01-1.5 1.5h-4.5v-6h-5v6H5A1.5 1.5 0 013.5 19z"/></svg><span>الرئيسية</span></button>
+  <button type="button" class="tab" data-tab="budget"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg><span>الميزانية</span></button>
+  <button type="button" class="tab" data-tab="add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><path d="M12 8v8M8 12h8"/></svg><span>إضافة</span></button>
+  <button type="button" class="tab" data-tab="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20v-9M12 20V4M18 20v-6"/></svg><span>التقارير</span></button>
+  <button type="button" class="tab" data-tab="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg><span>الإعدادات</span></button>
+</nav>
+
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-back" id="sheetBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="مشاركة التقرير">
+    <h3>شارك التقرير عن طريق</h3>
+    <div class="sheet-grid">
+      <a id="shWa" target="_blank" rel="noopener">واتساب</a>
+      <a id="shTg" target="_blank" rel="noopener">تيليجرام</a>
+      <a id="shSms">رسالة نصية</a>
+      <a id="shMail">بريد إلكتروني</a>
+      <button type="button" id="shCopy">نسخ</button>
+      <button type="button" id="shClose">إغلاق</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- شاشة القفل -->
+<div class="lock-screen" id="lockScreen" role="dialog" aria-modal="true" aria-label="التطبيق مقفول">
+  <form class="lock-card" id="lockForm" autocomplete="off" novalidate>
+    <div class="lock-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div>
+    <h2>مصاريفي مقفول</h2>
+    <input class="field lock-in" id="lockPw" type="password" placeholder="كلمة المرور" aria-label="كلمة المرور" autocomplete="current-password">
+    <div class="err" id="lockErr" role="alert"></div>
+    <button class="add-btn" id="lockGo" type="submit">فتح</button>
+    <button class="bio-btn" id="lockBio" type="button" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11v3a5 5 0 01-1 3"/><path d="M8 12a4 4 0 118 0c0 2.5-.5 4.5-1.5 6.5"/><path d="M5 12a7 7 0 1114 0c0 1.5-.2 2.8-.6 4"/><path d="M12 7.5a4.5 4.5 0 00-4.5 4.5c0 3-.5 4.5-1.3 6"/></svg>
+      <span>فتح بالبصمة</span>
+    </button>
+    <button class="link-btn" id="lockForgot" type="button">نسيت كلمة المرور؟</button>
+  </form>
+
+  <form class="lock-card" id="recForm" autocomplete="off" novalidate hidden>
+    <h2>استعادة الدخول</h2>
+    <p class="b-hint" id="recHint"></p>
+    <input class="field lock-in" id="recCode" type="text" dir="auto" placeholder="كود الاسترجاع" aria-label="كود الاسترجاع" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    <input class="field lock-in" id="recPw1" type="password" placeholder="كلمة المرور الجديدة" aria-label="كلمة المرور الجديدة" autocomplete="new-password">
+    <input class="field lock-in" id="recPw2" type="password" placeholder="أعد كتابة الجديدة" aria-label="تأكيد كلمة المرور الجديدة" autocomplete="new-password">
+    <div class="err" id="recErr" role="alert"></div>
+    <button class="add-btn" id="recGo" type="submit">استعادة الدخول</button>
+    <div class="rec-wait" id="recWaitBox">
+      <p class="b-hint" id="recWaitTxt"></p>
+      <button type="button" class="link-btn" id="recStart">ابدأ فترة الانتظار</button>
+    </div>
+    <button type="button" class="link-btn" id="recBack">رجوع</button>
+  </form>
+</div>
+
+<!-- إعدادات القفل والنسخ الاحتياطي -->
+<div class="sheet" id="lockDlg" hidden>
+  <div class="sheet-back" id="lockDlgBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="قفل التطبيق">
+    <h3>القفل والنسخ الاحتياطي</h3>
+
+    <form id="lkSetup" autocomplete="off" novalidate>
+      <p class="b-hint">اكتب كلمة مرور تفتح بيها التطبيق. هتاخد كود استرجاع بعد التفعيل، ولو نسيت كلمة المرور تقدر تدخل بيه من غير ما تتمسح أي بيانات.</p>
+      <div class="stack-fields">
+        <input class="field" id="lkPw1" type="password" placeholder="كلمة المرور (4 على الأقل)" aria-label="كلمة المرور" autocomplete="new-password">
+        <input class="field" id="lkPw2" type="password" placeholder="أعد كتابة كلمة المرور" aria-label="تأكيد كلمة المرور" autocomplete="new-password">
+        <button class="btn-sm full" type="submit">تفعيل القفل</button>
+      </div>
+      <div class="err" id="lkErr1" role="alert"></div>
+    </form>
+
+    <div id="lkManage" hidden>
+      <div class="lk-row">
+        <div><b>فتح بالبصمة</b><span id="lkBioState"></span></div>
+        <button type="button" class="link-btn" id="lkBioBtn"></button>
+      </div>
+      <div class="err" id="lkBioMsg" role="alert"></div>
+      <div class="lk-row">
+        <div><b>القفل التلقائي</b></div>
+        <select class="field" id="lkAuto" aria-label="القفل التلقائي">
+          <option value="0">فورًا</option>
+          <option value="60">بعد دقيقة</option>
+          <option value="300">بعد 5 دقايق</option>
+          <option value="-1">من غير قفل تلقائي</option>
+        </select>
+      </div>
+      <div class="lk-row">
+        <div><b>كود الاسترجاع</b><span id="lkRecState"></span></div>
+        <button type="button" class="link-btn" id="lkRecBtn"></button>
+      </div>
+      <details id="lkChDetails">
+        <summary>تغيير كلمة المرور</summary>
+        <form id="lkChange" autocomplete="off" novalidate>
+          <input class="field" id="lkCur" type="password" placeholder="كلمة المرور الحالية" aria-label="كلمة المرور الحالية" autocomplete="current-password">
+          <input class="field" id="lkNew1" type="password" placeholder="كلمة المرور الجديدة" aria-label="كلمة المرور الجديدة" autocomplete="new-password">
+          <input class="field" id="lkNew2" type="password" placeholder="أعد كتابة الجديدة" aria-label="تأكيد كلمة المرور الجديدة" autocomplete="new-password">
+          <button class="btn-sm full" type="submit">حفظ الكلمة الجديدة</button>
+        </form>
+        <div class="err" id="lkErr2" role="alert"></div>
+      </details>
+      <details id="lkOffDetails">
+        <summary>إيقاف القفل</summary>
+        <form id="lkOffForm" autocomplete="off" novalidate>
+          <input class="field" id="lkOffPw" type="password" placeholder="كلمة المرور الحالية" aria-label="كلمة المرور الحالية" autocomplete="current-password">
+          <button class="btn-sm full" type="submit">إيقاف القفل</button>
+        </form>
+        <div class="err" id="lkErr3" role="alert"></div>
+      </details>
+      <button type="button" class="btn-sm full" id="lkNow">اقفل الآن</button>
+    </div>
+
+    <button type="button" class="link-btn" id="lkClose">إغلاق</button>
+  </div>
+</div>
+<!-- التحديثات -->
+<div class="sheet" id="updDlg" hidden>
+  <div class="sheet-back" id="updBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="تحديث جديد">
+    <h3>🎉 فيه تحديث جديد</h3>
+    <p class="b-hint" id="updVer"></p>
+    <ul class="about-list" id="updNotes"></ul>
+    <p class="b-hint">بياناتك هتفضل زي ما هي بعد التحديث.</p>
+    <button type="button" class="add-btn" id="updNow">تحديث الآن</button>
+    <button type="button" class="link-btn" id="updLater">لاحقًا</button>
+  </div>
+</div>
+<!-- كود الاسترجاع -->
+<div class="sheet" id="recDlg" hidden>
+  <div class="sheet-back"></div>
+  <div class="sheet-box" role="dialog" aria-label="كود الاسترجاع">
+    <h3>كود الاسترجاع</h3>
+    <p class="b-hint">احتفظ بالكود ده في مكان آمن (صوّره أو اكتبه). لو نسيت كلمة المرور هتحتاجه عشان تدخل تاني من غير ما تتمسح أي بيانات. بيظهر مرة واحدة بس.</p>
+    <div class="rec-code" id="recShow"></div>
+    <div class="sheet-grid">
+      <button type="button" id="recCopy">نسخ الكود</button>
+      <button type="button" id="recDone">تمام، حفظته</button>
+    </div>
+  </div>
+</div>
+<!-- النسخة كنص -->
+<div class="sheet" id="txtDlg" hidden>
+  <div class="sheet-back" id="txtBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="النسخة الاحتياطية كنص">
+    <h3>النسخة الاحتياطية كنص</h3>
+    <p class="b-hint">ده النص الكامل لنسخة بياناتك. انسخه واحفظه في مكان آمن (ملاحظات أو Drive أو رسالة لنفسك). ولاستعادة البيانات: امسح النص هنا، والصق النص المنسوخ، واضغط استيراد.</p>
+    <textarea class="field txt-area" id="txtArea" rows="7" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="الصق هنا النص المنسوخ" aria-label="النسخة الاحتياطية كنص"></textarea>
+    <div class="sheet-grid">
+      <button type="button" id="txtCopy">نسخ النص</button>
+      <button type="button" id="txtImport">استيراد من النص</button>
+    </div>
+    <button type="button" class="link-btn" id="txtClose">إغلاق</button>
+  </div>
+</div>
+<!-- صورة التقرير (لو الجهاز ما بيسمحش بالتنزيل) -->
+<div class="sheet" id="imgDlg" hidden>
+  <div class="sheet-back" id="imgBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="معاينة التقرير">
+    <h3>معاينة التقرير</h3>
+    <p class="b-hint">الجهاز ده مش بيسمح بتنزيل ملف PDF. اضغط مطوّلًا على الصورة واختار حفظ، أو خد لقطة شاشة.</p>
+    <div class="img-list" id="imgList"></div>
+    <button type="button" class="link-btn" id="imgClose">إغلاق</button>
+  </div>
+</div>
+<!-- رفع النسخة إلى Drive (لو الجهاز ما بيدعمش المشاركة) -->
+<div class="sheet" id="driveDlg" hidden>
+  <div class="sheet-back" id="driveBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="رفع النسخة إلى Drive">
+    <h3>رفع النسخة إلى Drive</h3>
+    <p class="b-hint">اتنزّل ملف النسخة الاحتياطية على جهازك، وارفعه دلوقتي على Google Drive:</p>
+    <ol class="about-list">
+      <li>افتح Google Drive.</li>
+      <li>اضغط على + ثم رفع.</li>
+      <li>اختار الملف من مجلد التنزيلات:</li>
+    </ol>
+    <div class="rec-code" id="driveName" style="font-size:18px;letter-spacing:0"></div>
+    <div class="sheet-grid">
+      <a id="driveOpen" href="https://drive.google.com/drive/my-drive" target="_blank" rel="noopener">فتح Google Drive</a>
+      <button type="button" id="driveDone">تمام</button>
+    </div>
+  </div>
+</div>
+<!-- حول التطبيق -->
+<div class="sheet" id="aboutDlg" hidden>
+  <div class="sheet-back" id="aboutBack"></div>
+  <div class="sheet-box" role="dialog" aria-label="حول التطبيق">
+    <div class="about-head">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 012-2h13v4"/><path d="M3 7v11a2 2 0 002 2h14a1 1 0 001-1v-9a1 1 0 00-1-1H5a2 2 0 01-2-2z"/><circle cx="16" cy="14" r="1.2" fill="currentColor"/></svg></span>
+      <div><h3>مصاريفي</h3><span class="ver" id="aboutVer"></span></div>
+    </div>
+    <p class="b-hint">تطبيق بسيط لتسجيل مصاريفك الشهرية ومتابعة ميزانيتك.</p>
+    <ul class="about-list">
+      <li>سجّل مصاريفك وصنّفها بأنواع جاهزة أو بأنواع تكتبها بنفسك.</li>
+      <li>حدد ميزانية الشهر وشوف فاضل كام.</li>
+      <li>شارك تقرير الشهر في أي تطبيق.</li>
+      <li>اقفل التطبيق بكلمة مرور وبصمة، وخد نسخة احتياطية.</li>
+    </ul>
+    <div class="lk-row"><div><b>المصاريف المحفوظة</b></div><b id="aboutCount"></b></div>
+    <div class="lk-row"><div><b>مكان الحفظ</b></div><b>جهازك فقط</b></div>
+    <p class="b-hint">بياناتك بتتخزن في المتصفح على جهازك فقط وما بتتبعتش لأي مكان. الخط بيتحمّل من Google Fonts لما يكون في إنترنت، وغير كده التطبيق بيشتغل من غير إنترنت.</p>
+    <button type="button" class="link-btn" id="aboutClose">إغلاق</button>
+  </div>
+</div>
+<input type="file" id="bkFileAny" hidden>
+<input type="file" id="bkFile" accept=".json,application/json" hidden>
+
+<script>
+
+(function () {
+  "use strict";
+
+  /* ===== إعدادات المطوّر (التحديثات) =====
+     APP_VERSION: غيّره مع كل إصدار جديد (مثال: "1.1").
+     UPDATE_MANIFEST_URL: رابط ملف version.json على استضافتك (https). سيبه فاضي لو مش عايز نظام تحديثات. */
+  var APP_VERSION = "1.0";
+  var UPDATE_MANIFEST_URL = "https://7tthydyurf-cpu.github.io/masrofaty/version.json";
+
+  var KEY = "masrofaty-v1";
+  var CATS = [
+    { id: "food",      name: "أكل",          color: "#F2A33A" },
+    { id: "transport", name: "مواصلات",      color: "#3E8EDE" },
+    { id: "bills",     name: "فواتير",       color: "#8E6BE0" },
+    { id: "fun",       name: "خروج",         color: "#E0527D" },
+    { id: "other",     name: "حاجات تانية",  color: "#3FB59F" }
+  ];
+  var catById = {};
+  CATS.forEach(function (c) { catById[c.id] = c; });
+
+  var CURS = [
+    { id: "egp", name: "جنيه" },
+    { id: "sar", name: "ريال" },
+    { id: "aed", name: "درهم" },
+    { id: "kwd", name: "دينار" },
+    { id: "usd", name: "دولار" }
+  ];
+  var curById = {};
+  CURS.forEach(function (c) { curById[c.id] = c; });
+
+  /* أنواع مكتوبة يدويا: بتتخزن في الحقل cat بالشكل "c:الاسم" */
+  var EXTRA_COLORS = ["#6FB7F5", "#C58BF2", "#F2837F", "#7FB8A4", "#E3C35B", "#8FA2F0", "#D68FB0", "#9CCB6A"];
+  function colorFor(name) {
+    var h = 0;
+    for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0;
+    return EXTRA_COLORS[h % EXTRA_COLORS.length];
+  }
+  function catInfo(key) {
+    if (catById[key]) return catById[key];
+    if (typeof key === "string" && key.indexOf("c:") === 0 && key.length > 2) {
+      var n = key.slice(2);
+      return { id: key, name: n, color: colorFor(n) };
+    }
+    return catById.other;
+  }
+  function keyFromName(raw) {
+    var n = String(raw).replace(/\s+/g, " ").trim().slice(0, 20);
+    if (!n) return "";
+    var nl = n.toLowerCase();
+    for (var i = 0; i < CATS.length; i++) {
+      if (CATS[i].name === n || (EN[CATS[i].name] && EN[CATS[i].name].toLowerCase() === nl)) return CATS[i].id;
+    }
+    return "c:" + n;
+  }
+
+  /* ---------- التخزين ---------- */
+  var memory = [];
+  var canStore = true;
+  try {
+    localStorage.setItem(KEY + "-test", "1");
+    localStorage.removeItem(KEY + "-test");
+  } catch (e) { canStore = false; }
+
+  function load() {
+    if (!canStore) return memory;
+    try {
+      var raw = localStorage.getItem(KEY);
+      var arr = raw ? JSON.parse(raw) : [];
+      return Array.isArray(arr) ? arr : [];
+    } catch (e) { return []; }
+  }
+  function save() {
+    if (!canStore) { memory = items; return; }
+    try { localStorage.setItem(KEY, JSON.stringify(items)); }
+    catch (e) { canStore = false; memory = items; showStorageNote(); }
+  }
+  function showStorageNote() {
+    document.getElementById("storageNote").hidden = canStore;
+  }
+
+  var items = load();
+
+  /* الإعدادات: العملة والميزانية */
+  var SKEY = "masrofaty-settings-v1";
+  var memorySettings = null;
+  function loadSettings() {
+    var def = { cur: "egp", budget: 0, lang: "ar", theme: "system" };
+    var o = null;
+    if (!canStore) { o = memorySettings; }
+    else { try { o = JSON.parse(localStorage.getItem(SKEY) || "null"); } catch (e) { o = null; } }
+    if (!o || typeof o !== "object") return def;
+    return {
+      cur: curById[o.cur] ? o.cur : def.cur,
+      budget: isFinite(o.budget) && o.budget > 0 ? Number(o.budget) : 0,
+      lang: o.lang === "en" ? "en" : "ar",
+      theme: (o.theme === "light" || o.theme === "dark") ? o.theme : "system"
+    };
+  }
+  function saveSettings() {
+    if (!canStore) { memorySettings = settings; return; }
+    try { localStorage.setItem(SKEY, JSON.stringify(settings)); }
+    catch (e) { canStore = false; memory = items; memorySettings = settings; showStorageNote(); }
+  }
+  var settings = loadSettings();
+
+  /* ---------- اللغة والمظهر ---------- */
+  var EN = {"الحفظ مش شغال في العرض ده. نزّل الملف وافتحه من جهازك عشان اللي بتكتبه يفضل محفوظ.": "Saving doesn't work in this preview. Download the file and open it from your device so your entries stay saved.", "مصاريفي": "My Expenses", "مرحبا 👋": "Hello 👋", "الشهر اللي قبله": "Previous month", "الشهر اللي بعده": "Next month", "ملخص الشهر": "Month summary", "مجموع الشهر": "Month total", "الميزانية": "Budget", "فاضل": "Left", "إحصائيات سريعة": "Quick stats", "المعاملات": "Transactions", "عرض المعاملات": "Show transactions", "الكل": "All", "شهري": "Monthly", "أسبوعي": "Weekly", "يومي": "Daily", "ميزانية الشهر": "Monthly budget", "تعديل": "Edit", "المصروف من الميزانية": "Spent of budget", "اكتب ميزانيتك الشهرية مرة واحدة، وهتتطبق على كل الشهور.": "Enter your monthly budget once; it applies to every month.", "حفظ": "Save", "إلغاء": "Cancel", "مسح الميزانية": "Clear budget", "إضافة مصروف": "Add expense", "مصروف جديد": "New expense", "المبلغ": "Amount", "النوع": "Category", "+ نوع تاني": "+ Other category", "اكتب نوع تاني": "Type another category", "ملاحظة (اختياري)": "Note (optional)", "ملاحظة": "Note", "التاريخ": "Date", "أضف المصروف": "Add expense", "حسب النوع": "By category", "شارك تقرير الشهر": "Share month report", "العملة": "Currency", "اختار العملة": "Choose currency", "القفل والنسخ الاحتياطي": "Lock & backup", "التنقل": "Navigation", "الرئيسية": "Home", "إضافة": "Add", "التقارير": "Reports", "الإعدادات": "Settings", "مشاركة التقرير": "Share report", "شارك التقرير عن طريق": "Share report via", "واتساب": "WhatsApp", "تيليجرام": "Telegram", "رسالة نصية": "Text message", "بريد إلكتروني": "Email", "نسخ": "Copy", "إغلاق": "Close", "التطبيق مقفول": "App is locked", "مصاريفي مقفول": "My Expenses is locked", "كلمة المرور": "Password", "فتح": "Unlock", "فتح بالبصمة": "Unlock with fingerprint", "نسيت كلمة المرور؟": "Forgot password?", "قفل التطبيق": "App lock", "كلمة المرور (4 على الأقل)": "Password (at least 4)", "أعد كتابة كلمة المرور": "Re-enter password", "تأكيد كلمة المرور": "Confirm password", "تفعيل القفل": "Enable lock", "القفل التلقائي": "Auto-lock", "فورًا": "Immediately", "بعد دقيقة": "After 1 minute", "بعد 5 دقايق": "After 5 minutes", "من غير قفل تلقائي": "Never", "تغيير كلمة المرور": "Change password", "كلمة المرور الحالية": "Current password", "كلمة المرور الجديدة": "New password", "أعد كتابة الجديدة": "Re-enter new password", "تأكيد كلمة المرور الجديدة": "Confirm new password", "حفظ الكلمة الجديدة": "Save new password", "إيقاف القفل": "Turn off lock", "اقفل الآن": "Lock now", "نسخة احتياطية": "Backup", "اللغة": "Language", "لغة التطبيق": "App language", "المظهر": "Appearance", "مظهر التطبيق": "App appearance", "تلقائي": "Auto", "فاتح": "Light", "داكن": "Dark", "حول التطبيق": "About", "الإصدار {v}": "Version {v}", "تطبيق بسيط لتسجيل مصاريفك الشهرية ومتابعة ميزانيتك.": "A simple app to log your monthly expenses and track your budget.", "سجّل مصاريفك وصنّفها بأنواع جاهزة أو بأنواع تكتبها بنفسك.": "Log your expenses and sort them with ready-made or your own categories.", "حدد ميزانية الشهر وشوف فاضل كام.": "Set a monthly budget and see how much is left.", "شارك تقرير الشهر في أي تطبيق.": "Share the month report in any app.", "اقفل التطبيق بكلمة مرور وبصمة، وخد نسخة احتياطية.": "Lock the app with a password and fingerprint, and keep a backup.", "المصاريف المحفوظة": "Saved expenses", "مكان الحفظ": "Stored on", "جهازك فقط": "This device only", "بياناتك بتتخزن في المتصفح على جهازك فقط وما بتتبعتش لأي مكان. الخط بيتحمّل من Google Fonts لما يكون في إنترنت، وغير كده التطبيق بيشتغل من غير إنترنت.": "Your data is stored in the browser on your device only and is never sent anywhere. The font loads from Google Fonts when you're online; otherwise the app works fully offline.", "أكل": "Food", "مواصلات": "Transport", "فواتير": "Bills", "خروج": "Going out", "حاجات تانية": "Other", "جنيه": "Pound", "ريال": "Riyal", "درهم": "Dirham", "دينار": "Dinar", "دولار": "Dollar", "النهارده": "Today", "امبارح": "Yesterday", "مفيش مصاريف في الشهر ده. افتح تبويب إضافة وسجّل أول مصروف.": "No expenses this month. Open the Add tab and log your first one.", "مفيش مصاريف النهارده.": "No expenses today.", "مفيش مصاريف في آخر 7 أيام.": "No expenses in the last 7 days.", "لسه ما سجلتش أي مصروف.": "You haven't logged any expense yet.", "امسح المصروف": "Delete expense", "اكتب مبلغ صحيح أكبر من صفر.": "Enter a valid amount greater than zero.", "اختار نوع من اللي فوق أو اكتب نوع تاني.": "Pick a category above or type your own.", "اتضاف المصروف ✓  مجموع الشهر: {t}": "Expense added ✓  Month total: {t}", "تمسح المصروف ده؟": "Delete this expense?", "عديت بـ": "Over by", "عديت الميزانية بـ": "Over budget by", "صرفت {a} من {b}": "Spent {a} of {b}", "عديت 80% من الميزانية": "You've passed 80% of your budget", "تمسح الميزانية؟": "Clear the budget?", "اكتب ميزانية صحيحة أكبر من صفر.": "Enter a valid budget greater than zero.", "تقرير مصاريف {m}": "Expense report for {m}", "المجموع: {x}": "Total: {x}", "الميزانية: {x}": "Budget: {x}", "فاضل: {x}": "Left: {x}", "عديت الميزانية بـ {x}": "Over budget by {x}", "حسب النوع:": "By category:", "التفاصيل:": "Details:", "اتنسخ التقرير. الصقه في أي محادثة.": "Report copied. Paste it into any chat.", "ما قدرتش أنسخ التقرير.": "Couldn't copy the report.", "تقرير المصاريف": "Expense report", "مفيش مصاريف في الشهر ده عشان تتشارك.": "No expenses this month to share.", "البصمة بتشتغل بس لما التطبيق يتفتح من رابط https (زي Netlify أو GitHub Pages)، مش من الملف على الجهاز مباشرة. ولو فتحته من رابط هتلاقي البيانات هناك فاضية، فانقلها بالنسخة الاحتياطية.": "Fingerprint only works when the app is opened from an https link (like Netlify or GitHub Pages), not directly from the file on your device. If you open it from a link, the data there will be empty, so move it with a backup.", "جرب تاني بعد {n} ثانية.": "Try again in {n} seconds.", "اكتب كلمة المرور.": "Enter the password.", "جاري التحقق...": "Checking...", "كلمة المرور غلط. جرب بعد {n} ثانية.": "Wrong password. Try again in {n} seconds.", "كلمة المرور غلط.": "Wrong password.", "اتلغت العملية أو البصمة ما اتأكدتش.": "Cancelled, or the fingerprint wasn't verified.", "الجهاز ما قدرش يستخدم البصمة هنا. اتأكد إن بصمة أو قفل الشاشة مفعّل في إعدادات الموبايل.": "This device couldn't use fingerprint here. Make sure a fingerprint or screen lock is set up in your phone settings.", "ما قدرتش أشغّل البصمة": "Couldn't start fingerprint", "القفل مفعّل": "Lock is on", "القفل مش مفعّل": "Lock is off", "مفعّلة": "On", "مش مفعّلة": "Off", "إيقاف": "Turn off", "تفعيل": "Turn on", "كلمة المرور لازم تكون 4 حروف أو أرقام على الأقل.": "Password must be at least 4 characters.", "كلمتين المرور مش متطابقين.": "Passwords don't match.", "اتفعّل القفل. تقدر دلوقتي تفعّل البصمة كمان.": "Lock enabled. You can turn on fingerprint too.", "اتوقفت البصمة.": "Fingerprint turned off.", "اتفعّلت البصمة.": "Fingerprint turned on.", "الكلمة الجديدة لازم تكون 4 حروف أو أرقام على الأقل.": "New password must be at least 4 characters.", "كلمتين المرور الجديدتين مش متطابقين.": "New passwords don't match.", "كلمة المرور الحالية غلط.": "Current password is wrong.", "اتغيرت كلمة المرور.": "Password changed.", "مفيش بيانات تتصدّر لسه.": "Nothing to export yet.", "اتنزّل ملف النسخة الاحتياطية.": "Backup file downloaded.", "ما قدرتش أنزّل الملف على المتصفح ده.": "Couldn't download the file in this browser.", "الملف ده مش نسخة احتياطية من التطبيق.": "This file isn't a backup from this app.", "اتضاف {n} مصروف من النسخة الاحتياطية.": "Added {n} expenses from the backup.", "مفيش مصاريف جديدة تتضاف.": "No new expenses to add.", "ما قدرتش أقرا الملف.": "Couldn't read the file.", "البيانات": "Data", "تصدير إلى ملف JSON": "Export to JSON file", "حفظ نسخة احتياطية من مصاريفك في ملف": "Save a backup of your expenses to a file", "استيراد من ملف JSON": "Import from JSON file", "استعادة المصاريف من ملف JSON": "Restore expenses from a JSON file", "اكتب كلمة مرور تفتح بيها التطبيق. هتاخد كود استرجاع بعد التفعيل، ولو نسيت كلمة المرور تقدر تدخل بيه من غير ما تتمسح أي بيانات.": "Set a password to open the app. You'll get a recovery code after enabling; if you forget your password you can get back in with it without losing any data.", "كود الاسترجاع": "Recovery code", "احتفظ بالكود ده في مكان آمن (صوّره أو اكتبه). لو نسيت كلمة المرور هتحتاجه عشان تدخل تاني من غير ما تتمسح أي بيانات. بيظهر مرة واحدة بس.": "Keep this code somewhere safe (take a screenshot or write it down). If you forget your password you'll need it to get back in without losing any data. It's shown only once.", "نسخ الكود": "Copy code", "تمام، حفظته": "Done, I saved it", "اتنسخ الكود.": "Code copied.", "ما قدرتش أنسخ الكود.": "Couldn't copy the code.", "متسجل": "Saved", "مش متسجل": "Not set", "كود جديد": "New code", "إنشاء كود": "Create code", "هيتلغي الكود القديم. تكمل؟": "The old code will stop working. Continue?", "استعادة الدخول": "Regain access", "رجوع": "Back", "ابدأ فترة الانتظار": "Start the waiting period", "اكتب كود الاسترجاع وكلمة مرور جديدة. مفيش أي بيانات بتتمسح.": "Enter your recovery code and a new password. No data is deleted.", "مفيش كود استرجاع متسجل لقفلك ده. تقدر تستعيد الدخول بعد فترة انتظار 24 ساعة، ومفيش بيانات بتتمسح.": "No recovery code is saved for this lock. You can regain access after a 24-hour wait, and no data is deleted.", "ضيّعت الكود كمان؟ تقدر تستعيد الدخول بعد فترة انتظار 24 ساعة، وبرضه مفيش بيانات بتتمسح.": "Lost the code too? You can regain access after a 24-hour wait, and still no data is deleted.", "فترة الانتظار خلصت. اكتب كلمة مرور جديدة وادخل.": "The waiting period is over. Enter a new password to get in.", "فاضل على الاستعادة: {t}": "Time left: {t}", "{h} ساعة و{m} دقيقة": "{h} h {m} min", "ابدأ فترة الانتظار الأول.": "Start the waiting period first.", "اكتب كود الاسترجاع.": "Enter the recovery code.", "كود الاسترجاع غلط.": "Wrong recovery code.", "كود الاسترجاع غلط. جرب بعد {n} ثانية.": "Wrong recovery code. Try again in {n} seconds.", "اتلغى طلب استعادة كلمة المرور.": "Password recovery request cancelled.", "اتغيرت كلمة المرور. خد كود الاسترجاع الجديد.": "Password changed. Take the new recovery code.", "التفاصيل": "Details", "التفاصيل (تابع)": "Details (cont.)", "رفع إلى Google Drive": "Upload to Google Drive", "إرسال نسخة احتياطية إلى حسابك على Drive": "Send a backup copy to your Drive account", "استيراد من Google Drive": "Import from Google Drive", "اختيار ملف النسخة الاحتياطية من Drive": "Pick the backup file from Drive", "رفع النسخة إلى Drive": "Upload the backup to Drive", "اتنزّل ملف النسخة الاحتياطية على جهازك، وارفعه دلوقتي على Google Drive:": "The backup file was saved to your device. Now upload it to Google Drive:", "افتح Google Drive.": "Open Google Drive.", "اضغط على + ثم رفع.": "Tap + then Upload.", "اختار الملف من مجلد التنزيلات:": "Choose the file from your Downloads folder:", "فتح Google Drive": "Open Google Drive", "تمام": "OK", "اتبعتت النسخة. اتأكد إنك اخترت Drive.": "Backup sent. Make sure you picked Drive.", "من شاشة اختيار الملف افتح القايمة الجانبية واختار Drive.": "On the file picker, open the side menu and choose Drive.", "نسخ أو لصق كنص": "Copy or paste as text", "طريقة بديلة لو الملفات مش شغالة عندك": "An alternative if files don't work on your device", "النسخة الاحتياطية كنص": "Backup as text", "ده النص الكامل لنسخة بياناتك. انسخه واحفظه في مكان آمن (ملاحظات أو Drive أو رسالة لنفسك). ولاستعادة البيانات: امسح النص هنا، والصق النص المنسوخ، واضغط استيراد.": "This is the full text of your data backup. Copy it and keep it somewhere safe (notes, Drive, or a message to yourself). To restore: clear the text here, paste the copied text, and tap Import.", "الصق هنا النص المنسوخ": "Paste the copied text here", "نسخ النص": "Copy text", "استيراد من النص": "Import from text", "اتنسخ النص.": "Text copied.", "ما قدرتش أنسخ النص.": "Couldn't copy the text.", "النص ده مش نسخة احتياطية من التطبيق.": "This text isn't a backup from this app.", "عروض ومكافآت": "Offers & rewards", "تنزيل تقرير PDF": "Download PDF report", "مفيش مصاريف في الشهر ده عشان تتحوّل لملف PDF.": "No expenses this month to turn into a PDF.", "جاري تجهيز الملف...": "Preparing the file...", "ما قدرتش أعمل ملف PDF للتقرير.": "Couldn't create the PDF report.", "اتنزّل ملف PDF للتقرير.": "PDF report downloaded.", "معاينة التقرير": "Report preview", "الجهاز ده مش بيسمح بتنزيل ملف PDF. اضغط مطوّلًا على الصورة واختار حفظ، أو خد لقطة شاشة.": "This device doesn't allow downloading a PDF. Press and hold the image and choose Save, or take a screenshot.", "حسب النوع (تابع)": "By category (cont.)", "التحديثات": "Updates", "غير مفعّل": "Not enabled", "تحديث متاح: {v}": "Update available: {v}", "تحديث جديد": "New update", "🎉 فيه تحديث جديد": "🎉 A new update is available", "الإصدار {v} متاح (إنت على {c})": "Version {v} is available (you're on {c})", "بياناتك هتفضل زي ما هي بعد التحديث.": "Your data will stay exactly as it is after the update.", "تحديث الآن": "Update now", "لاحقًا": "Later", "نظام التحديثات مش مفعّل في النسخة دي.": "Updates aren't enabled in this version.", "جاري البحث عن تحديث...": "Checking for updates...", "ما قدرتش أقرا بيانات التحديث.": "Couldn't read the update info.", "إنت على آخر إصدار.": "You're on the latest version.", "ما قدرتش أوصل لخادم التحديثات. اتأكد من الإنترنت وجرب تاني.": "Couldn't reach the update server. Check your internet and try again.", "تمام، هنفكّرك بعدين. تقدر تحدّث في أي وقت من الإعدادات.": "OK, we'll remind you later. You can update any time from Settings.", "جاري التحديث...": "Updating...", "افتح الصفحة ونزّل النسخة الجديدة وثبّتها فوق القديمة.": "Open the page, download the new version and install it over the old one.", "مفيش رابط تحديث متاح.": "No update link available.", "لسه النسخة القديمة. جرب تاني بعد دقيقة، أو اقفل التطبيق وافتحه.": "Still the old version. Try again in a minute, or close and reopen the app.", "اتحدّث التطبيق للإصدار {v}. بياناتك زي ما هي ({n} مصروف).": "App updated to version {v}. Your data is intact ({n} expenses)."};
+  function T(ar) { return (settings.lang === "en" && EN[ar]) ? EN[ar] : ar; }
+  function TF(ar, vars) {
+    var out = T(ar);
+    Object.keys(vars).forEach(function (k) { out = out.split("{" + k + "}").join(String(vars[k])); });
+    return out;
+  }
+  function catName(c) { return catById[c.id] ? T(c.name) : c.name; }
+
+
+  /* ---------- أدوات ---------- */
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function ymd(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function today() { return ymd(new Date()); }
+  function monthOf(dateStr) { return dateStr.slice(0, 7); }
+
+  function fmt(n) {
+    return Number(n).toLocaleString("en-US", { maximumFractionDigits: 2 });
+  }
+  function curName() { return T(curById[settings.cur].name); }
+  function moneyHtml(n) { return fmt(n) + '<span class="cur">' + curName() + '</span>'; }
+  function moneyText(n) { return fmt(n) + " " + curName(); }
+  function normalizeNumber(s) {
+    var map = { "٠":0,"١":1,"٢":2,"٣":3,"٤":4,"٥":5,"٦":6,"٧":7,"٨":8,"٩":9,
+                "۰":0,"۱":1,"۲":2,"۳":3,"۴":4,"۵":5,"۶":6,"۷":7,"۸":8,"۹":9 };
+    return s.replace(/[٠-٩۰-۹]/g, function (c) { return map[c]; })
+            .replace(/[٫،,]/g, ".")
+            .replace(/\s+/g, "");
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function dtf(opts) {
+    return { format: function (d) {
+      return new Intl.DateTimeFormat(settings.lang === "en" ? "en-US" : "ar-EG-u-nu-latn", opts).format(d);
+    } };
+  }
+  var monthFmt = dtf({ month: "long", year: "numeric" });
+  var dayFmt = dtf({ weekday: "long", day: "numeric", month: "long" });
+
+  function parseYmd(s) {
+    var p = s.split("-");
+    return new Date(+p[0], +p[1] - 1, +p[2]);
+  }
+  function dayLabel(s) {
+    var t = today();
+    if (s === t) return T("النهارده");
+    var y = new Date(); y.setDate(y.getDate() - 1);
+    if (s === ymd(y)) return T("امبارح");
+    return dayFmt.format(parseYmd(s));
+  }
+  function shiftMonth(key, delta) {
+    var p = key.split("-");
+    var d = new Date(+p[0], +p[1] - 1 + delta, 1);
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1);
+  }
+
+  /* ---------- الحالة ---------- */
+  var view = monthOf(today());
+
+  /* ---------- العناصر ---------- */
+  var el = {
+    monthTitle: document.getElementById("monthTitle"),
+    totalNum: document.getElementById("totalNum"),
+    stack: document.getElementById("stack"),
+    cats: document.getElementById("cats"),
+    list: document.getElementById("list"),
+    prev: document.getElementById("prevBtn"),
+    next: document.getElementById("nextBtn"),
+    form: document.getElementById("form"),
+    amount: document.getElementById("amount"),
+    note: document.getElementById("note"),
+    date: document.getElementById("date"),
+    err: document.getElementById("err"),
+    chips: document.getElementById("chips")
+  };
+
+  /* أزرار الأنواع + الحقل اليدوي */
+  var customInput = document.getElementById("customCat");
+
+  function buildChips(selectedKey) {
+    Array.prototype.slice.call(el.chips.querySelectorAll(".chip")).forEach(function (n) {
+      n.parentNode.removeChild(n);
+    });
+    var all = CATS;
+    all.forEach(function (c) {
+      var label = document.createElement("label");
+      label.className = "chip";
+      label.style.setProperty("--c", c.color);
+      var input = document.createElement("input");
+      input.type = "radio";
+      input.name = "cat";
+      input.value = c.id;
+      if (c.id === selectedKey) input.checked = true;
+      var span = document.createElement("span");
+      span.textContent = emojiOf(c) + " " + catName(c);
+      label.appendChild(input);
+      label.appendChild(span);
+      el.chips.insertBefore(label, customInput);
+    });
+  }
+  function selectedCat() {
+    var typed = keyFromName(customInput.value);
+    if (typed) return typed;
+    var r = el.chips.querySelector("input:checked");
+    return r ? r.value : "";
+  }
+  buildChips(CATS[0].id);
+
+  el.chips.addEventListener("change", function (e) {
+    if (e.target && e.target.name === "cat") customInput.value = "";
+  });
+  customInput.addEventListener("input", function () {
+    el.err.textContent = "";
+    var checked = el.chips.querySelector("input:checked");
+    if (customInput.value.trim()) {
+      if (checked) checked.checked = false;
+    } else if (!checked) {
+      var first = el.chips.querySelector("input");
+      if (first) first.checked = true;
+    }
+  });
+
+  el.date.value = today();
+
+  function summarize(list) {
+    var total = 0, sums = {}, extra = [];
+    CATS.forEach(function (c) { sums[c.id] = 0; });
+    list.forEach(function (it) {
+      total += it.amount;
+      var info = catInfo(it.cat);
+      if (sums[info.id] === undefined) { sums[info.id] = 0; extra.push(info); }
+      sums[info.id] += it.amount;
+    });
+    extra.sort(function (a, b) { return sums[b.id] - sums[a.id]; });
+    return { total: total, sums: sums, shown: CATS.concat(extra) };
+  }
+
+  function tint(c) { return c + "26"; }
+  function emojiOf(info) {
+    return ({ food: "🍔", transport: "🚗", bills: "🧾", fun: "🎉", other: "🛍️" })[info.id] || "🏷️";
+  }
+  var shortDay = dtf({ day: "numeric", month: "long" });
+  function rowDate(s) {
+    if (s === today()) return T("النهارده");
+    var y = new Date(); y.setDate(y.getDate() - 1);
+    if (s === ymd(y)) return T("امبارح");
+    return shortDay.format(parseYmd(s));
+  }
+  var listMode = "month";
+  function inMode(it) {
+    if (listMode === "all") return true;
+    if (listMode === "day") return it.date === today();
+    if (listMode === "week") {
+      var d = new Date(); d.setDate(d.getDate() - 6);
+      return it.date >= ymd(d) && it.date <= today();
+    }
+    return monthOf(it.date) === view;
+  }
+  var EMPTY_TEXT = {
+    month: "مفيش مصاريف في الشهر ده. افتح تبويب إضافة وسجّل أول مصروف.",
+    day: "مفيش مصاريف النهارده.",
+    week: "مفيش مصاريف في آخر 7 أيام.",
+    all: "لسه ما سجلتش أي مصروف."
+  };
+
+  /* ---------- الرسم ---------- */
+  function render() {
+    el.monthTitle.textContent = monthFmt.format(parseYmd(view + "-01"));
+    byId("repMonth").textContent = el.monthTitle.textContent;
+    el.next.disabled = view >= monthOf(today());
+
+    var monthItems = items.filter(function (it) { return monthOf(it.date) === view; });
+    var sm = summarize(monthItems);
+    var total = sm.total, sums = sm.sums, shown = sm.shown;
+
+    el.totalNum.innerHTML = moneyHtml(total);
+    el.totalNum.classList.toggle("long", fmt(total).length > 9);
+
+    /* إحصائيات سريعة */
+    document.getElementById("quick").innerHTML = shown.map(function (c) {
+      return '<div class="q-item' + (sums[c.id] === 0 ? " zero" : "") + '">' +
+        '<span class="q-ic" style="background:' + tint(c.color) + '">' + emojiOf(c) + '</span>' +
+        '<b>' + fmt(sums[c.id]) + '</b><small>' + esc(catName(c)) + '</small></div>';
+    }).join("");
+
+    /* التقارير: الشريط الملون + كل نوع */
+    el.stack.innerHTML = shown.map(function (c) {
+      var w = total > 0 ? (sums[c.id] / total) * 100 : 0;
+      return w > 0 ? '<i style="width:' + w + '%;background:' + c.color + '"></i>' : "";
+    }).join("");
+    el.cats.innerHTML = shown.map(function (c) {
+      var pct = total > 0 ? Math.round((sums[c.id] / total) * 100) : 0;
+      return '<li class="cat-row' + (sums[c.id] === 0 ? " zero" : "") + '">' +
+        '<span class="cr-ic" style="background:' + tint(c.color) + '">' + emojiOf(c) + '</span>' +
+        '<div><div class="cr-top"><span class="cat-name">' + esc(catName(c)) + '</span>' +
+        '<span class="cat-amt">' + moneyHtml(sums[c.id]) + (sums[c.id] > 0 ? '<small>' + pct + '%</small>' : "") + '</span></div>' +
+        '<span class="cr-bar"><i style="width:' + pct + '%;background:' + c.color + '"></i></span></div>' +
+      '</li>';
+    }).join("");
+
+    renderBudget(total);
+    renderPills();
+
+    /* المعاملات + الفلتر */
+    Array.prototype.forEach.call(document.getElementById("filters").children, function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === listMode));
+    });
+    var rows = items.filter(inMode).sort(function (a, b) {
+      if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+      return b.id < a.id ? -1 : 1;
+    });
+    var listTotal = rows.reduce(function (s, x) { return s + x.amount; }, 0);
+    document.getElementById("listSum").innerHTML = rows.length ? moneyHtml(listTotal) : "";
+
+    if (rows.length === 0) {
+      el.list.innerHTML = '<p class="empty">' + T(EMPTY_TEXT[listMode]) + '</p>';
+      return;
+    }
+    el.list.innerHTML = rows.map(function (it) {
+      var c = catInfo(it.cat);
+      return '<div class="tx">' +
+        '<span class="tx-ic" style="background:' + tint(c.color) + '">' + emojiOf(c) + '</span>' +
+        '<div class="tx-main"><b>' + esc(catName(c)) + '</b><span>' + rowDate(it.date) + (it.note ? " · " + esc(it.note) : "") + '</span></div>' +
+        '<span class="tx-amt">' + moneyHtml(it.amount) + '</span>' +
+        '<button class="del" data-id="' + esc(it.id) + '" aria-label="' + esc(T("امسح المصروف")) + '">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M9 7V4h6v3"/></svg>' +
+        '</button>' +
+      '</div>';
+    }).join("");
+  }
+
+  /* ---------- الأحداث ---------- */
+  el.prev.addEventListener("click", function () { view = shiftMonth(view, -1); render(); });
+  el.next.addEventListener("click", function () {
+    if (view < monthOf(today())) { view = shiftMonth(view, 1); render(); }
+  });
+
+  el.amount.addEventListener("input", function () {
+    el.amount.classList.remove("bad");
+    el.err.textContent = "";
+  });
+
+  el.form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var value = parseFloat(normalizeNumber(el.amount.value));
+    if (!isFinite(value) || value <= 0) {
+      el.amount.classList.add("bad");
+      el.err.textContent = T("اكتب مبلغ صحيح أكبر من صفر.");
+      el.amount.focus();
+      return;
+    }
+    value = Math.round(value * 100) / 100;
+    var cat = selectedCat();
+    if (!cat) {
+      el.err.textContent = T("اختار نوع من اللي فوق أو اكتب نوع تاني.");
+      return;
+    }
+    var date = el.date.value || today();
+
+    items.push({
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      amount: value,
+      cat: cat,
+      note: el.note.value.trim(),
+      date: date
+    });
+    save();
+
+    view = monthOf(date);
+    customInput.value = "";
+    buildChips(catById[cat] ? cat : CATS[0].id);
+    el.amount.value = "";
+    el.note.value = "";
+    el.err.textContent = "";
+    render();
+    hideKeyboard();
+    say(TF("اتضاف المصروف ✓  مجموع الشهر: {t}", { t: moneyText(summarize(items.filter(function (x) { return monthOf(x.date) === view; })).total) }));
+  });
+
+  el.list.addEventListener("click", function (e) {
+    var btn = e.target.closest(".del");
+    if (!btn) return;
+    if (!window.confirm(T("تمسح المصروف ده؟"))) return;
+    var id = btn.getAttribute("data-id");
+    items = items.filter(function (it) { return it.id !== id; });
+    save();
+    render();
+  });
+
+  /* ---------- العملة ---------- */
+  var pills = document.getElementById("pills");
+  CURS.forEach(function (c) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "pill";
+    b.textContent = c.name;
+    b.setAttribute("data-cur", c.id);
+    pills.appendChild(b);
+  });
+  pills.addEventListener("click", function (e) {
+    var b = e.target.closest(".pill");
+    if (!b) return;
+    settings.cur = b.getAttribute("data-cur");
+    saveSettings();
+    render();
+  });
+  function renderPills() {
+    Array.prototype.forEach.call(pills.children, function (b) {
+      b.textContent = T(curById[b.getAttribute("data-cur")].name);
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-cur") === settings.cur));
+    });
+  }
+
+  /* ---------- الميزانية ---------- */
+  var editingBudget = false;
+  var bud = {
+    show: document.getElementById("budgetShow"),
+    form: document.getElementById("budgetForm"),
+    input: document.getElementById("budgetInput"),
+    err: document.getElementById("bErr"),
+    label: document.getElementById("bLabel"),
+    left: document.getElementById("bLeft"),
+    meter: document.getElementById("meter"),
+    fill: document.getElementById("meterFill"),
+    spent: document.getElementById("bSpent"),
+    pct: document.getElementById("bPct"),
+    warn: document.getElementById("bWarn"),
+    edit: document.getElementById("budgetEdit"),
+    cancel: document.getElementById("budgetCancel"),
+    clear: document.getElementById("budgetClear")
+  };
+
+  function renderBudget(spent) {
+    var has = settings.budget > 0;
+    var hb = document.getElementById("heroBudget"), hl = document.getElementById("heroLeft");
+    var hlLbl = document.getElementById("heroLeftLbl");
+    if (has) {
+      var lf = settings.budget - spent;
+      hb.innerHTML = moneyHtml(settings.budget);
+      hl.innerHTML = moneyHtml(Math.abs(lf));
+      hl.classList.toggle("over", lf < 0);
+      hlLbl.textContent = lf < 0 ? T("عديت بـ") : T("فاضل");
+    } else {
+      hb.textContent = "—"; hl.textContent = "—"; hl.classList.remove("over"); hlLbl.textContent = T("فاضل");
+    }
+    var showForm = !has || editingBudget;
+    bud.form.hidden = !showForm;
+    bud.show.hidden = showForm;
+    bud.edit.hidden = !has || showForm;
+    bud.cancel.hidden = !(has && editingBudget);
+    bud.clear.hidden = !(has && editingBudget);
+    if (showForm) return;
+
+    var b = settings.budget;
+    var ratio = spent / b;
+    var pct = Math.round(ratio * 100);
+    var left = b - spent;
+    var over = left < 0;
+    var hot = ratio > 0.8;
+
+    bud.label.textContent = over ? T("عديت الميزانية بـ") : T("فاضل");
+    bud.left.innerHTML = moneyHtml(Math.abs(left));
+    bud.left.classList.toggle("over", over);
+    bud.meter.classList.toggle("hot", hot);
+    bud.fill.style.width = Math.min(100, Math.max(0, ratio * 100)) + "%";
+    bud.meter.setAttribute("aria-valuenow", String(Math.min(100, pct)));
+    bud.spent.textContent = TF("صرفت {a} من {b}", { a: moneyText(spent), b: moneyText(b) });
+    bud.pct.textContent = pct + "%";
+    bud.warn.textContent = (hot && !over) ? T("عديت 80% من الميزانية") : "";
+  }
+
+  bud.edit.addEventListener("click", function () {
+    editingBudget = true;
+    bud.input.value = String(settings.budget);
+    bud.err.textContent = "";
+    render();
+    bud.input.focus();
+    bud.input.select();
+  });
+  bud.cancel.addEventListener("click", function () {
+    editingBudget = false;
+    bud.err.textContent = "";
+    render();
+  });
+  bud.clear.addEventListener("click", function () {
+    if (!window.confirm(T("تمسح الميزانية؟"))) return;
+    settings.budget = 0;
+    saveSettings();
+    editingBudget = false;
+    bud.input.value = "";
+    bud.err.textContent = "";
+    render();
+  });
+  bud.form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = parseFloat(normalizeNumber(bud.input.value));
+    if (!isFinite(v) || v <= 0) {
+      bud.err.textContent = T("اكتب ميزانية صحيحة أكبر من صفر.");
+      bud.input.focus();
+      return;
+    }
+    settings.budget = Math.round(v * 100) / 100;
+    saveSettings();
+    editingBudget = false;
+    bud.input.value = "";
+    bud.err.textContent = "";
+    render();
+    hideKeyboard();
+  });
+
+  /* إخفاء لوحة المفاتيح بعد الحفظ */
+  function hideKeyboard() {
+    [el.amount, el.note, el.date, customInput, bud.input].forEach(function (n) {
+      if (n && n.blur) n.blur();
+    });
+    var a = document.activeElement;
+    if (a && a !== document.body && a.blur) a.blur();
+  }
+
+  /* ---------- تقرير PDF ---------- */
+  var RPT_W = 1080, RPT_H = 1528, RPT_PAD = 48, RPT_CW = 984, RPT_IN = 36, RPT_K = 1.5;
+  var RPT_FAM = '"Tajawal", "Segoe UI", Tahoma, "Noto Sans Arabic", system-ui, sans-serif';
+  var longDay = dtf({ day: "numeric", month: "long", year: "numeric" });
+  function pf(w, px) { return w + " " + px + "px " + RPT_FAM; }
+
+  function wrapLines(c, text, maxW) {
+    var words = String(text).split(/\s+/), lines = [], cur = "";
+    words.forEach(function (w) {
+      if (!w) return;
+      var t = cur ? cur + " " + w : w;
+      if (c.measureText(t).width <= maxW) { cur = t; return; }
+      if (cur) lines.push(cur);
+      cur = "";
+      if (c.measureText(w).width > maxW) {
+        var part = "";
+        Array.from(w).forEach(function (ch) {
+          if (c.measureText(part + ch).width > maxW && part) { lines.push(part); part = ch; } else part += ch;
+        });
+        cur = part;
+      } else cur = w;
+    });
+    if (cur) lines.push(cur);
+    return lines;
+  }
+  function fitText(c, text, maxW) {
+    if (c.measureText(text).width <= maxW) return text;
+    var arr = Array.from(text);
+    while (arr.length > 1 && c.measureText(arr.join("") + "…").width > maxW) arr.pop();
+    return arr.join("") + "…";
+  }
+  function rrect(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+
+  /* بيرسم صفحات A4 (كل صفحة Canvas) بالترتيب: الهيدر، الميزانية، الأنواع، التفاصيل */
+  function makeReportPages(d) {
+    var rtl = settings.lang !== "en", dirName = rtl ? "rtl" : "ltr";
+    var pages = [], pg, LIMIT = RPT_H - 100;
+
+    function kit(c) {
+      var k = {};
+      k.sx = function (off) { return rtl ? RPT_W - RPT_PAD - off : RPT_PAD + off; };
+      k.ex = function (off) { return rtl ? RPT_PAD + off : RPT_W - RPT_PAD - off; };
+      k.S = function (text, off, y, font, color) {
+        c.font = font; c.fillStyle = color; c.direction = dirName; c.textBaseline = "middle";
+        c.textAlign = rtl ? "right" : "left"; c.fillText(text, k.sx(off), y);
+      };
+      k.E = function (text, off, y, font, color) {
+        c.font = font; c.fillStyle = color; c.direction = dirName; c.textBaseline = "middle";
+        c.textAlign = rtl ? "left" : "right"; c.fillText(text, k.ex(off), y);
+      };
+      k.W = function (text, font) { c.font = font; c.direction = dirName; return c.measureText(text).width; };
+      k.card = function (y, h) {
+        c.save();
+        c.shadowColor = "rgba(33,40,120,.10)"; c.shadowBlur = 28; c.shadowOffsetY = 8;
+        c.fillStyle = "#FFFFFF"; rrect(c, RPT_PAD, y, RPT_CW, h, 36); c.fill();
+        c.restore();
+      };
+      k.bar = function (y, h, ratio, color) {
+        var x0 = RPT_PAD + RPT_IN, w = RPT_CW - 2 * RPT_IN;
+        c.fillStyle = "#E9EBF6"; rrect(c, x0, y, w, h, h / 2); c.fill();
+        if (ratio > 0) {
+          var fw = Math.max(h, w * Math.min(1, ratio));
+          c.fillStyle = color; rrect(c, rtl ? x0 + w - fw : x0, y, fw, h, h / 2); c.fill();
+        }
+      };
+      return k;
+    }
+    function newPage() {
+      var cv = document.createElement("canvas");
+      cv.width = Math.round(RPT_W * RPT_K); cv.height = Math.round(RPT_H * RPT_K);
+      var c = cv.getContext("2d");
+      c.scale(RPT_K, RPT_K);
+      c.fillStyle = "#F4F5FB"; c.fillRect(0, 0, RPT_W, RPT_H);
+      var p = { cv: cv, c: c, k: kit(c), y: 28 };
+      pages.push(p);
+      return p;
+    }
+
+    /* قياس الصفوف */
+    var mc = document.createElement("canvas").getContext("2d");
+    mc.direction = dirName; mc.font = pf(500, 26);
+    var noteW = RPT_CW - 2 * RPT_IN - 200;
+    var cats = d.sm.shown.filter(function (c) { return d.sm.sums[c.id] > 0; });
+    var catRows = cats.map(function (ci) { return { h: 96, ci: ci }; });
+    var detRows = d.items.map(function (it) {
+      var lines = it.note ? wrapLines(mc, it.note, noteW) : [];
+      return { it: it, lines: lines, h: lines.length ? 80 + lines.length * 36 : 80 };
+    });
+    var hasBudget = settings.budget > 0;
+
+    /* الهيدر */
+    pg = newPage();
+    (function () {
+      var c = pg.c, k = pg.k;
+      var g = c.createLinearGradient(0, 0, RPT_W, 340);
+      g.addColorStop(0, "#2A2585"); g.addColorStop(1, "#4B3FC0");
+      c.fillStyle = g;
+      c.beginPath(); c.moveTo(0, 0); c.lineTo(RPT_W, 0); c.lineTo(RPT_W, 340 - 48);
+      c.arcTo(RPT_W, 340, RPT_W - 48, 340, 48); c.lineTo(48, 340); c.arcTo(0, 340, 0, 340 - 48, 48);
+      c.closePath(); c.fill();
+      k.S(T("مصاريفي"), 0, 76, pf(800, 40), "#FFFFFF");
+      k.E(longDay.format(new Date()), 0, 76, pf(500, 26), "rgba(255,255,255,.72)");
+      k.S(TF("تقرير مصاريف {m}", { m: d.month }), 0, 142, pf(700, 36), "#FFFFFF");
+      k.S(T("مجموع الشهر"), 0, 206, pf(500, 28), "rgba(255,255,255,.75)");
+      var numFont = pf(800, 88), numTxt = fmt(d.sm.total), nw = k.W(numTxt, numFont);
+      k.S(numTxt, 0, 276, numFont, "#FFFFFF");
+      k.S(curName(), nw + 20, 286, pf(600, 36), "rgba(255,255,255,.85)");
+      pg.y = 340 + 28;
+    })();
+
+    /* الميزانية */
+    if (hasBudget) {
+      (function () {
+        var c = pg.c, k = pg.k, y = pg.y;
+        var b = settings.budget, spent = d.sm.total, left = b - spent, ratio = spent / b, hot = ratio > 0.8;
+        k.card(y, 262);
+        k.S(T("الميزانية"), RPT_IN, y + 52, pf(500, 30), "#7C7FA3");
+        k.E(moneyText(b), RPT_IN, y + 52, pf(700, 32), "#1B1B3A");
+        k.S(left < 0 ? T("عديت بـ") : T("فاضل"), RPT_IN, y + 108, pf(500, 30), "#7C7FA3");
+        k.E(moneyText(Math.abs(left)), RPT_IN, y + 108, pf(800, 36), left < 0 ? "#D6364C" : "#1B1B3A");
+        k.bar(y + 148, 28, ratio, hot ? "#D6364C" : "#1E9E63");
+        var tw = RPT_CW - 2 * RPT_IN, tickX = RPT_PAD + RPT_IN + tw * (rtl ? 0.2 : 0.8);
+        c.fillStyle = "#FFFFFF"; c.fillRect(tickX - 1.5, y + 148, 3, 28);
+        k.S(TF("صرفت {a} من {b}", { a: moneyText(spent), b: moneyText(b) }), RPT_IN, y + 214, pf(500, 26), "#7C7FA3");
+        k.E(Math.round(ratio * 100) + "%", RPT_IN, y + 214, pf(800, 28), hot ? "#D6364C" : "#1E9E63");
+        pg.y += 262 + 28;
+      })();
+    }
+
+    /* كارت فيه صفوف بتتقسم على صفحات لو طوّل */
+    function flowCard(title, contTitle, countText, rows, headH, titleDy, padB, drawRow) {
+      var i = 0, first = true;
+      while (i < rows.length) {
+        var avail = LIMIT - pg.y - headH - padB, take = [], used = 0;
+        while (i + take.length < rows.length && used + rows[i + take.length].h <= avail) {
+          used += rows[i + take.length].h;
+          take.push(rows[i + take.length]);
+        }
+        if (!take.length) {
+          if (pg.y > 60) { pg = newPage(); continue; }
+          take.push(rows[i]); used = rows[i].h;
+        }
+        var h = headH + used + padB, k = pg.k;
+        k.card(pg.y, h);
+        k.S(first ? title : contTitle, RPT_IN, pg.y + titleDy, pf(800, 36), "#1B1B3A");
+        if (first && countText) k.E(countText, RPT_IN, pg.y + titleDy, pf(700, 30), "#7C7FA3");
+        var ry = pg.y + headH;
+        take.forEach(function (r, idx) { drawRow(pg, r, ry, idx); ry += r.h; });
+        pg.y += h + 28;
+        i += take.length;
+        first = false;
+        if (i < rows.length) pg = newPage();
+      }
+    }
+
+    flowCard(T("حسب النوع"), T("حسب النوع (تابع)"), "", catRows, 104, 56, 4, function (p, r, ry) {
+      var k = p.k, ci = r.ci, sum = d.sm.sums[ci.id], pct = d.sm.total > 0 ? sum / d.sm.total : 0;
+      k.S(emojiOf(ci), RPT_IN, ry + 26, pf(400, 40), "#1B1B3A");
+      mc.font = pf(600, 32);
+      k.S(fitText(mc, catName(ci), 420), RPT_IN + 64, ry + 26, pf(600, 32), "#1B1B3A");
+      var amt = moneyText(sum), aw = k.W(amt, pf(700, 32));
+      k.E(amt, RPT_IN, ry + 26, pf(700, 32), "#1B1B3A");
+      k.E(Math.round(pct * 100) + "%", RPT_IN + aw + 22, ry + 26, pf(500, 28), "#7C7FA3");
+      k.bar(ry + 62, 14, pct, ci.color);
+    });
+
+    flowCard(T("التفاصيل"), T("التفاصيل (تابع)"), String(d.items.length), detRows, 96, 50, 12, function (p, r, ry, idx) {
+      var c = p.c, k = p.k, it = r.it, ci = catInfo(it.cat);
+      if (idx > 0) { c.fillStyle = "#ECEEF7"; c.fillRect(RPT_PAD + RPT_IN, ry - 1, RPT_CW - 2 * RPT_IN, 2); }
+      k.S(shortDay.format(parseYmd(it.date)), RPT_IN, ry + 36, pf(500, 28), "#7C7FA3");
+      mc.font = pf(600, 30);
+      k.S(emojiOf(ci) + " " + fitText(mc, catName(ci), 300), RPT_IN + 200, ry + 36, pf(600, 30), "#1B1B3A");
+      k.E(moneyText(it.amount), RPT_IN, ry + 36, pf(800, 32), "#D6364C");
+      r.lines.forEach(function (ln, li) { k.S(ln, RPT_IN + 200, ry + 74 + li * 36, pf(500, 26), "#7C7FA3"); });
+    });
+
+    /* الفوتر */
+    pages.forEach(function (p, i) {
+      var c = p.c;
+      c.font = pf(600, 26); c.fillStyle = "#A4A7CB"; c.textAlign = "center"; c.textBaseline = "middle"; c.direction = dirName;
+      c.fillText(T("مصاريفي") + (pages.length > 1 ? "  ·  " + (i + 1) + "/" + pages.length : ""), RPT_W / 2, RPT_H - 52);
+    });
+    return pages.map(function (p) { return p.cv; });
+  }
+
+  /* ---------- ملف PDF من غير مكتبات: كل صفحة A4 فيها صورة الصفحة ---------- */
+  function blobBytes(blob) {
+    return new Promise(function (resolve, reject) {
+      var fr = new FileReader();
+      fr.onload = function () { resolve(new Uint8Array(fr.result)); };
+      fr.onerror = reject;
+      fr.readAsArrayBuffer(blob);
+    });
+  }
+  function canvasesToJpegs(canvases) {
+    return Promise.all(canvases.map(function (cv) {
+      return new Promise(function (resolve, reject) {
+        cv.toBlob(function (blob) {
+          if (!blob) { reject(new Error("toBlob")); return; }
+          blobBytes(blob).then(function (bytes) { resolve({ bytes: bytes, w: cv.width, h: cv.height }); }, reject);
+        }, "image/jpeg", 0.92);
+      });
+    }));
+  }
+  function buildPdf(pagesData, title) {
+    var chunks = [], offsets = [], pos = 0;
+    function bin(str) {
+      var a = new Uint8Array(str.length);
+      for (var i = 0; i < str.length; i++) a[i] = str.charCodeAt(i) & 255;
+      return a;
+    }
+    function put(x) { var b = typeof x === "string" ? bin(x) : x; chunks.push(b); pos += b.length; }
+    function begin(n) { offsets[n] = pos; put(n + " 0 obj\n"); }
+    function hex16(str) {
+      var o = "FEFF";
+      for (var i = 0; i < str.length; i++) o += ("0000" + str.charCodeAt(i).toString(16)).slice(-4);
+      return "<" + o.toUpperCase() + ">";
+    }
+    function pad2(n) { return (n < 10 ? "0" : "") + n; }
+    var now = new Date();
+    var stamp = "D:" + now.getFullYear() + pad2(now.getMonth() + 1) + pad2(now.getDate()) + pad2(now.getHours()) + pad2(now.getMinutes()) + pad2(now.getSeconds());
+    var n = pagesData.length, total = 3 + 3 * n, kids = [];
+    for (var i = 0; i < n; i++) kids.push((4 + i * 3) + " 0 R");
+
+    put("%PDF-1.4\n%\u00E2\u00E3\u00CF\u00D3\n");
+    begin(1); put("<< /Type /Catalog /Pages 2 0 R >>\nendobj\n");
+    begin(2); put("<< /Type /Pages /Kids [" + kids.join(" ") + "] /Count " + n + " >>\nendobj\n");
+    begin(3); put("<< /Title " + hex16(title) + " /Producer (Masrofaty) /CreationDate (" + stamp + ") >>\nendobj\n");
+    pagesData.forEach(function (pd, idx) {
+      var pn = 4 + idx * 3, cn = pn + 1, im = pn + 2;
+      begin(pn);
+      put("<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /XObject << /Im0 " + im + " 0 R >> >> /Contents " + cn + " 0 R >>\nendobj\n");
+      var content = "q 595 0 0 842 0 0 cm /Im0 Do Q";
+      begin(cn);
+      put("<< /Length " + content.length + " >>\nstream\n" + content + "\nendstream\nendobj\n");
+      begin(im);
+      put("<< /Type /XObject /Subtype /Image /Width " + pd.w + " /Height " + pd.h + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length " + pd.bytes.length + " >>\nstream\n");
+      put(pd.bytes);
+      put("\nendstream\nendobj\n");
+    });
+    var xref = pos;
+    put("xref\n0 " + (total + 1) + "\n0000000000 65535 f \n");
+    for (var k = 1; k <= total; k++) put(("0000000000" + offsets[k]).slice(-10) + " 00000 n \n");
+    put("trailer\n<< /Size " + (total + 1) + " /Root 1 0 R /Info 3 0 R >>\nstartxref\n" + xref + "\n%%EOF\n");
+    var out = new Uint8Array(pos), at = 0;
+    chunks.forEach(function (c) { out.set(c, at); at += c.length; });
+    return out;
+  }
+
+  function downloadReportPdf() {
+    var monthItems = items.filter(function (it) { return monthOf(it.date) === view; });
+    if (monthItems.length === 0) { say(T("مفيش مصاريف في الشهر ده عشان تتحوّل لملف PDF.")); return; }
+    var data = {
+      month: monthFmt.format(parseYmd(view + "-01")),
+      items: monthItems.slice().sort(function (a, b) {
+        if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+        return a.id < b.id ? -1 : 1;
+      }),
+      sm: summarize(monthItems)
+    };
+    var btn = byId("pdfBtn");
+    btn.disabled = true;
+    say(T("جاري تجهيز الملف..."));
+    function fail() { btn.disabled = false; say(T("ما قدرتش أعمل ملف PDF للتقرير.")); }
+    var sample = "مصاريفي أكل 0123456789 Expenses";
+    var fontsReady = (document.fonts && document.fonts.load)
+      ? Promise.race([
+          Promise.all([500, 600, 700, 800].map(function (w) {
+            return document.fonts.load(w + " 28px Tajawal", sample).catch(function () {});
+          })),
+          new Promise(function (r) { setTimeout(r, 2500); })
+        ])
+      : Promise.resolve();
+    fontsReady.then(function () {
+      var canvases = makeReportPages(data);
+      return canvasesToJpegs(canvases).then(function (jp) {
+        var bytes = buildPdf(jp, TF("تقرير مصاريف {m}", { m: data.month }));
+        var name = "masrofaty-report-" + view + ".pdf";
+        btn.disabled = false;
+        if (IS_WEBVIEW) {
+          /* داخل تطبيق APK: مشاركة الملف لو متاحة، وإلا معاينة بالصور */
+          try {
+            var f = new File([bytes], name, { type: "application/pdf" });
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [f] })) {
+              navigator.share({ files: [f], title: name }).catch(function (e) {
+                if (e && e.name === "AbortError") return;
+                showReportImages(canvases);
+              });
+              return;
+            }
+          } catch (e) {}
+          showReportImages(canvases);
+          return;
+        }
+        saveBlob(new Blob([bytes], { type: "application/pdf" }), name);
+        say(T("اتنزّل ملف PDF للتقرير."));
+      });
+    }).catch(fail);
+  }
+  byId("pdfBtn").addEventListener("click", downloadReportPdf);
+  function closeImgDlg() { byId("imgDlg").hidden = true; byId("imgList").innerHTML = ""; }
+  function showReportImages(canvases) {
+    var list = byId("imgList");
+    list.innerHTML = "";
+    canvases.forEach(function (cv) {
+      var im = document.createElement("img");
+      im.alt = T("معاينة التقرير");
+      im.src = cv.toDataURL("image/jpeg", 0.85);
+      list.appendChild(im);
+    });
+    byId("imgDlg").hidden = false;
+  }
+  byId("imgClose").addEventListener("click", closeImgDlg);
+  byId("imgBack").addEventListener("click", closeImgDlg);
+
+  /* ---------- مشاركة التقرير ---------- */
+  var shareBtn = document.getElementById("shareBtn");
+  var toast = document.getElementById("toast");
+  var toastTimer = null;
+  function say(text) {
+    toast.textContent = text;
+    toast.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("on"); }, 3000);
+  }
+
+  function buildReport() {
+    var monthItems = items.filter(function (it) { return monthOf(it.date) === view; });
+    if (monthItems.length === 0) return "";
+    var sm = summarize(monthItems);
+    var total = sm.total;
+
+    var L = [];
+    L.push(TF("تقرير مصاريف {m}", { m: monthFmt.format(parseYmd(view + "-01")) }));
+    L.push("");
+    L.push(TF("المجموع: {x}", { x: moneyText(total) }));
+    if (settings.budget > 0) {
+      var left = settings.budget - total;
+      L.push(TF("الميزانية: {x}", { x: moneyText(settings.budget) }));
+      L.push(left >= 0 ? TF("فاضل: {x}", { x: moneyText(left) })
+                       : TF("عديت الميزانية بـ {x}", { x: moneyText(-left) }));
+    }
+    L.push("");
+    L.push(T("حسب النوع:"));
+    sm.shown.forEach(function (c) {
+      if (sm.sums[c.id] > 0) {
+        L.push("• " + catName(c) + ": " + moneyText(sm.sums[c.id]) +
+               " (" + Math.round((sm.sums[c.id] / total) * 100) + "%)");
+      }
+    });
+    L.push("");
+    L.push(T("التفاصيل:"));
+    monthItems.slice().sort(function (a, b) {
+      if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+      return a.id < b.id ? -1 : 1;
+    }).forEach(function (it) {
+      var p = it.date.split("-");
+      var c = catInfo(it.cat);
+      L.push(Number(p[2]) + "/" + Number(p[1]) + " - " + catName(c) + " - " +
+             moneyText(it.amount) + (it.note ? " - " + it.note : ""));
+    });
+    return L.join("\n");
+  }
+
+  function copyText(text) {
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      say(ok ? T("اتنسخ التقرير. الصقه في أي محادثة.") : T("ما قدرتش أنسخ التقرير."));
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        say(T("اتنسخ التقرير. الصقه في أي محادثة."));
+      }, fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  /* قايمة بديلة لو المتصفح ما بيدعمش قايمة مشاركة النظام */
+  var sheet = document.getElementById("sheet");
+  var reportText = "";
+  function openSheet(text) {
+    reportText = text;
+    var enc = encodeURIComponent(text);
+    document.getElementById("shWa").href = "https://wa.me/?text=" + enc;
+    document.getElementById("shTg").href = "https://t.me/share/url?url=%20&text=" + enc;
+    document.getElementById("shSms").href = "sms:?body=" + enc;
+    document.getElementById("shMail").href =
+      "mailto:?subject=" + encodeURIComponent(T("تقرير المصاريف")) + "&body=" + enc;
+    sheet.hidden = false;
+  }
+  function closeSheet() { sheet.hidden = true; }
+  document.getElementById("shClose").addEventListener("click", closeSheet);
+  document.getElementById("sheetBack").addEventListener("click", closeSheet);
+  document.getElementById("shCopy").addEventListener("click", function () {
+    copyText(reportText);
+    closeSheet();
+  });
+  sheet.addEventListener("click", function (e) {
+    if (e.target.closest("a")) closeSheet();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeSheet();
+  });
+
+  shareBtn.addEventListener("click", function () {
+    var text = buildReport();
+    if (!text) { say(T("مفيش مصاريف في الشهر ده عشان تتشارك.")); return; }
+    if (navigator.share) {
+      navigator.share({ title: T("تقرير المصاريف"), text: text }).catch(function (e) {
+        if (e && e.name === "AbortError") return;
+        openSheet(text);
+      });
+    } else {
+      openSheet(text);
+    }
+  });
+
+  /* ---------- قفل التطبيق ---------- */
+  var LKEY = "masrofaty-lock-v1";
+  var memoryLock = null;
+  var lock = null;
+  var HASH_ITER = 20000;
+  var HTTPS_MSG = "البصمة بتشتغل بس لما التطبيق يتفتح من رابط https (زي Netlify أو GitHub Pages)، مش من الملف على الجهاز مباشرة. ولو فتحته من رابط هتلاقي البيانات هناك فاضية، فانقلها بالنسخة الاحتياطية.";
+
+  /* SHA-256 + تحويل كلمة المرور لبصمة مشفرة (بتكرار) */
+  var SHA_K = [
+    0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+    0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+    0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+    0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+    0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+    0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+    0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+    0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2
+  ];
+  var SHA_W = new Int32Array(64);
+  function rotr(x, n) { return (x >>> n) | (x << (32 - n)); }
+  function sha256(msg) {
+    var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var l = msg.length;
+    var hi = Math.floor(l / 0x20000000), lo = (l << 3) >>> 0;
+    var total = ((l + 9 + 63) >> 6) << 6;
+    var buf = new Uint8Array(total);
+    buf.set(msg);
+    buf[l] = 0x80;
+    buf[total - 8] = (hi >>> 24) & 255; buf[total - 7] = (hi >>> 16) & 255;
+    buf[total - 6] = (hi >>> 8) & 255;  buf[total - 5] = hi & 255;
+    buf[total - 4] = (lo >>> 24) & 255; buf[total - 3] = (lo >>> 16) & 255;
+    buf[total - 2] = (lo >>> 8) & 255;  buf[total - 1] = lo & 255;
+    var w = SHA_W, i;
+    for (var off = 0; off < total; off += 64) {
+      for (i = 0; i < 16; i++) {
+        w[i] = (buf[off + 4*i] << 24) | (buf[off + 4*i + 1] << 16) | (buf[off + 4*i + 2] << 8) | buf[off + 4*i + 3];
+      }
+      for (i = 16; i < 64; i++) {
+        var s0 = rotr(w[i-15], 7) ^ rotr(w[i-15], 18) ^ (w[i-15] >>> 3);
+        var s1 = rotr(w[i-2], 17) ^ rotr(w[i-2], 19) ^ (w[i-2] >>> 10);
+        w[i] = (w[i-16] + s0 + w[i-7] + s1) | 0;
+      }
+      var a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+      for (i = 0; i < 64; i++) {
+        var S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25);
+        var ch = (e & f) ^ (~e & g);
+        var t1 = (h + S1 + ch + SHA_K[i] + w[i]) | 0;
+        var S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22);
+        var mj = (a & b) ^ (a & c) ^ (b & c);
+        var t2 = (S0 + mj) | 0;
+        h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+      }
+      H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0;
+      H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+    }
+    var out = new Uint8Array(32);
+    for (i = 0; i < 8; i++) {
+      out[4*i] = (H[i] >>> 24) & 255; out[4*i + 1] = (H[i] >>> 16) & 255;
+      out[4*i + 2] = (H[i] >>> 8) & 255; out[4*i + 3] = H[i] & 255;
+    }
+    return out;
+  }
+  function utf8(str) {
+    if (window.TextEncoder) return new TextEncoder().encode(str);
+    var s = unescape(encodeURIComponent(str)), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  }
+  function concatBytes(a, b) {
+    var o = new Uint8Array(a.length + b.length);
+    o.set(a, 0);
+    o.set(b, a.length);
+    return o;
+  }
+  function b64(bytes) {
+    var a = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes), s = "";
+    for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]);
+    return btoa(s);
+  }
+  function unb64(str) {
+    var s = atob(str), a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) a[i] = s.charCodeAt(i);
+    return a;
+  }
+  function randBytes(n) {
+    var a = new Uint8Array(n);
+    (window.crypto || window.msCrypto).getRandomValues(a);
+    return a;
+  }
+  function hashPw(pw, saltB64, iter) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var salt = unb64(saltB64);
+        var h = sha256(concatBytes(salt, utf8(pw)));
+        for (var i = 0; i < iter; i++) h = sha256(concatBytes(h, salt));
+        resolve(b64(h));
+      }, 20);
+    });
+  }
+
+  function byId(id) { return document.getElementById(id); }
+  function msg(node, text, ok) { node.textContent = text; node.classList.toggle("ok", !!ok); }
+
+  function lockLoad() {
+    var o = null;
+    if (!canStore) { o = memoryLock; }
+    else { try { o = JSON.parse(localStorage.getItem(LKEY) || "null"); } catch (e) { o = null; } }
+    if (!o || typeof o.hash !== "string" || typeof o.salt !== "string") return null;
+    return {
+      salt: o.salt,
+      iter: o.iter > 0 ? o.iter : HASH_ITER,
+      hash: o.hash,
+      bio: typeof o.bio === "string" ? o.bio : null,
+      auto: typeof o.auto === "number" ? o.auto : 60,
+      fails: Number(o.fails) || 0,
+      until: Number(o.until) || 0,
+      rec: (o.rec && typeof o.rec.hash === "string" && typeof o.rec.salt === "string")
+        ? { salt: o.rec.salt, iter: o.rec.iter > 0 ? o.rec.iter : HASH_ITER, hash: o.rec.hash } : null,
+      resetAt: Number(o.resetAt) || 0
+    };
+  }
+  function lockSave() {
+    memoryLock = lock;
+    if (!canStore) return;
+    try {
+      if (lock) localStorage.setItem(LKEY, JSON.stringify(lock));
+      else localStorage.removeItem(LKEY);
+    } catch (e) {}
+  }
+
+  var L = {
+    screen: byId("lockScreen"), form: byId("lockForm"), pw: byId("lockPw"), err: byId("lockErr"),
+    go: byId("lockGo"), bio: byId("lockBio"), forgot: byId("lockForgot"),
+    btn: byId("lockBtn"), dlg: byId("lockDlg"), dlgBack: byId("lockDlgBack"),
+    setup: byId("lkSetup"), pw1: byId("lkPw1"), pw2: byId("lkPw2"), err1: byId("lkErr1"),
+    manage: byId("lkManage"), bioState: byId("lkBioState"), bioBtn: byId("lkBioBtn"), bioMsg: byId("lkBioMsg"),
+    auto: byId("lkAuto"),
+    change: byId("lkChange"), cur: byId("lkCur"), new1: byId("lkNew1"), new2: byId("lkNew2"), err2: byId("lkErr2"),
+    chDet: byId("lkChDetails"), offDet: byId("lkOffDetails"),
+    offForm: byId("lkOffForm"), offPw: byId("lkOffPw"), err3: byId("lkErr3"),
+    now: byId("lkNow"), close: byId("lkClose"),
+    bkFile: byId("bkFile")
+  };
+
+  function isLocked() { return document.documentElement.hasAttribute("data-locked"); }
+  function lockWait() {
+    return lock && lock.until > Date.now() ? Math.ceil((lock.until - Date.now()) / 1000) : 0;
+  }
+  function makeRecord(pw) {
+    var salt = b64(randBytes(16));
+    return hashPw(pw, salt, HASH_ITER).then(function (h) {
+      return { salt: salt, iter: HASH_ITER, hash: h };
+    });
+  }
+  function verifyPw(pw) {
+    return hashPw(pw, lock.salt, lock.iter).then(function (h) { return h === lock.hash; });
+  }
+
+  function showLock() {
+    L.pw.value = "";
+    L.err.textContent = "";
+    L.bio.hidden = !(lock && lock.bio);
+    L.form.hidden = false;
+    byId("recForm").hidden = true;
+    document.documentElement.setAttribute("data-locked", "1");
+  }
+  function unlockApp() {
+    document.documentElement.removeAttribute("data-locked");
+    L.pw.value = "";
+    L.err.textContent = "";
+    hideKeyboard();
+    if (typeof upd !== "undefined" && upd.waitUnlock) {
+      upd.waitUnlock = false;
+      setTimeout(function () { checkForUpdate(false); }, 800);
+    }
+  }
+  function lockNow() {
+    if (!lock) return;
+    closeSheet();
+    closeLockDlg();
+    byId("aboutDlg").hidden = true;
+    byId("recDlg").hidden = true;
+    byId("driveDlg").hidden = true;
+    byId("txtDlg").hidden = true;
+    byId("txtArea").value = "";
+    byId("imgDlg").hidden = true;
+    byId("imgList").innerHTML = "";
+    byId("recShow").textContent = "";
+    hideKeyboard();
+    showLock();
+    setTimeout(function () { bioUnlock(true); }, 350);
+  }
+
+  /* فتح بكلمة المرور */
+  L.form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!lock) { unlockApp(); return; }
+    var wait = lockWait();
+    if (wait > 0) { L.err.textContent = TF("جرب تاني بعد {n} ثانية.", { n: wait }); return; }
+    var pw = L.pw.value;
+    if (!pw) { L.err.textContent = T("اكتب كلمة المرور."); return; }
+    L.go.disabled = true;
+    L.go.textContent = T("جاري التحقق...");
+    verifyPw(pw).then(function (ok) {
+      L.go.disabled = false;
+      L.go.textContent = T("فتح");
+      if (ok) { afterUnlock(); return; }
+      lock.fails = (lock.fails || 0) + 1;
+      if (lock.fails >= 5) {
+        lock.until = Date.now() + Math.min(30 * Math.pow(2, lock.fails - 5), 900) * 1000;
+      }
+      lockSave();
+      L.pw.value = "";
+      var w = lockWait();
+      L.err.textContent = w > 0 ? TF("كلمة المرور غلط. جرب بعد {n} ثانية.", { n: w }) : T("كلمة المرور غلط.");
+      L.pw.focus();
+    });
+  });
+
+  /* البصمة (WebAuthn) */
+  function bioSupported() {
+    return !!(window.PublicKeyCredential && navigator.credentials &&
+              navigator.credentials.create && navigator.credentials.get && window.isSecureContext);
+  }
+  function bioErrText(e) {
+    var name = e && e.name;
+    if (location.protocol === "file:" || name === "SecurityError") return T(HTTPS_MSG);
+    if (name === "NotAllowedError") return T("اتلغت العملية أو البصمة ما اتأكدتش.");
+    if (name === "NotSupportedError" || name === "InvalidStateError") {
+      return T("الجهاز ما قدرش يستخدم البصمة هنا. اتأكد إن بصمة أو قفل الشاشة مفعّل في إعدادات الموبايل.");
+    }
+    return T("ما قدرتش أشغّل البصمة") + (name ? " (" + name + ")." : ".");
+  }
+  function bioEnroll() {
+    return navigator.credentials.create({
+      publicKey: {
+        challenge: randBytes(32),
+        rp: { name: "مصاريفي" },
+        user: { id: randBytes(16), name: "masrofaty", displayName: "مصاريفي" },
+        pubKeyCredParams: [{ type: "public-key", alg: -7 }, { type: "public-key", alg: -257 }],
+        authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required", residentKey: "discouraged" },
+        timeout: 60000,
+        attestation: "none"
+      }
+    }).then(function (cred) {
+      lock.bio = b64(cred.rawId);
+      lockSave();
+    });
+  }
+  function bioAuth() {
+    return navigator.credentials.get({
+      publicKey: {
+        challenge: randBytes(32),
+        allowCredentials: [{ type: "public-key", id: unb64(lock.bio), transports: ["internal"] }],
+        userVerification: "required",
+        timeout: 60000
+      }
+    });
+  }
+  function bioUnlock(silent) {
+    if (!lock || !lock.bio || !isLocked() || !bioSupported()) {
+      if (!silent && lock && lock.bio) L.err.textContent = bioErrText(null);
+      return;
+    }
+    bioAuth().then(function (cred) {
+      if (cred) afterUnlock();
+    }).catch(function (e) {
+      if (!silent) L.err.textContent = bioErrText(e);
+    });
+  }
+  L.bio.addEventListener("click", function () { bioUnlock(false); });
+
+  /* ---------- استعادة الدخول: من غير مسح أي بيانات أبدًا ---------- */
+  var WAIT_MS = 24 * 60 * 60 * 1000;
+  var REC_ALPHA = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  var recForm = byId("recForm"), recCode = byId("recCode"), recPw1 = byId("recPw1"), recPw2 = byId("recPw2");
+  var recErr = byId("recErr"), recGo = byId("recGo"), recDlg = byId("recDlg"), recShow = byId("recShow");
+
+  function genRecoveryCode() {
+    var bytes = randBytes(12), out = "";
+    for (var i = 0; i < 12; i++) out += REC_ALPHA.charAt(bytes[i] % REC_ALPHA.length);
+    return out;
+  }
+  function prettyCode(c) { return c.slice(0, 4) + "-" + c.slice(4, 8) + "-" + c.slice(8); }
+  function normCode(x) { return String(x).toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  function offerRecovery() {
+    if (!lock) return;
+    var code = genRecoveryCode(), salt = b64(randBytes(16));
+    hashPw(code, salt, HASH_ITER).then(function (h) {
+      lock.rec = { salt: salt, iter: HASH_ITER, hash: h };
+      lockSave();
+      recShow.textContent = prettyCode(code);
+      recDlg.hidden = false;
+      renderLockDlg();
+    });
+  }
+  function closeRecDlg() { recDlg.hidden = true; recShow.textContent = ""; }
+  byId("recDone").addEventListener("click", closeRecDlg);
+  byId("recCopy").addEventListener("click", function () {
+    var txt = recShow.textContent;
+    function ok() { say(T("اتنسخ الكود.")); }
+    function fb() {
+      var ta = document.createElement("textarea");
+      ta.value = txt; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand("copy"); } catch (e) { done = false; }
+      document.body.removeChild(ta);
+      if (done) ok(); else say(T("ما قدرتش أنسخ الكود."));
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fb); else fb();
+  });
+  byId("lkRecBtn").addEventListener("click", function () {
+    if (!lock) return;
+    if (lock.rec && !window.confirm(T("هيتلغي الكود القديم. تكمل؟"))) return;
+    offerRecovery();
+  });
+
+  function afterUnlock() {
+    var hadReset = !!lock.resetAt;
+    lock.fails = 0; lock.until = 0; lock.resetAt = 0;
+    lockSave();
+    unlockApp();
+    if (hadReset) say(T("اتلغى طلب استعادة كلمة المرور."));
+  }
+  function resetReady() { return !!(lock && lock.resetAt && Date.now() >= lock.resetAt); }
+  function resetWaiting() { return !!(lock && lock.resetAt && Date.now() < lock.resetAt); }
+  function fmtRemain(ms) {
+    var h = Math.floor(ms / 3600000), m = Math.ceil((ms % 3600000) / 60000);
+    if (m === 60) { h++; m = 0; }
+    return TF("{h} ساعة و{m} دقيقة", { h: h, m: m });
+  }
+  function recRender() {
+    if (!lock) return;
+    var ready = resetReady(), waiting = resetWaiting(), hasRec = !!lock.rec;
+    recCode.hidden = ready || !hasRec;
+    byId("recHint").textContent = ready ? T("فترة الانتظار خلصت. اكتب كلمة مرور جديدة وادخل.")
+      : hasRec ? T("اكتب كود الاسترجاع وكلمة مرور جديدة. مفيش أي بيانات بتتمسح.")
+      : T("مفيش كود استرجاع متسجل لقفلك ده. تقدر تستعيد الدخول بعد فترة انتظار 24 ساعة، ومفيش بيانات بتتمسح.");
+    byId("recWaitBox").hidden = ready;
+    byId("recWaitTxt").textContent = waiting ? TF("فاضل على الاستعادة: {t}", { t: fmtRemain(lock.resetAt - Date.now()) })
+      : hasRec ? T("ضيّعت الكود كمان؟ تقدر تستعيد الدخول بعد فترة انتظار 24 ساعة، وبرضه مفيش بيانات بتتمسح.") : "";
+    byId("recStart").hidden = waiting || ready;
+    recGo.disabled = !(ready || hasRec);
+  }
+  L.forgot.addEventListener("click", function () {
+    if (!lock) return;
+    L.form.hidden = true;
+    recForm.hidden = false;
+    recCode.value = ""; recPw1.value = ""; recPw2.value = "";
+    recErr.textContent = "";
+    recRender();
+  });
+  byId("recBack").addEventListener("click", function () {
+    recForm.hidden = true;
+    L.form.hidden = false;
+    recErr.textContent = "";
+  });
+  byId("recStart").addEventListener("click", function () {
+    if (!lock || lock.resetAt) return;
+    lock.resetAt = Date.now() + WAIT_MS;
+    lockSave();
+    recRender();
+  });
+  setInterval(function () { if (!recForm.hidden) recRender(); }, 30000);
+
+  recForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!lock) return;
+    var wait = lockWait();
+    if (wait > 0) { recErr.textContent = TF("جرب تاني بعد {n} ثانية.", { n: wait }); return; }
+    var ready = resetReady(), code = normCode(recCode.value), n1 = recPw1.value, n2 = recPw2.value;
+    if (!ready) {
+      if (!lock.rec) { recErr.textContent = T("ابدأ فترة الانتظار الأول."); return; }
+      if (code.length !== 12) { recErr.textContent = T("اكتب كود الاسترجاع."); return; }
+    }
+    if (n1.length < 4) { recErr.textContent = T("كلمة المرور لازم تكون 4 حروف أو أرقام على الأقل."); return; }
+    if (n1 !== n2) { recErr.textContent = T("كلمتين المرور مش متطابقين."); return; }
+    recErr.textContent = "";
+    recGo.disabled = true;
+    var check = ready ? Promise.resolve(true)
+      : hashPw(code, lock.rec.salt, lock.rec.iter).then(function (h) { return h === lock.rec.hash; });
+    check.then(function (ok) {
+      if (!ok) {
+        lock.fails = (lock.fails || 0) + 1;
+        if (lock.fails >= 5) lock.until = Date.now() + Math.min(30 * Math.pow(2, lock.fails - 5), 900) * 1000;
+        lockSave();
+        recRender();
+        var w = lockWait();
+        recErr.textContent = w > 0 ? TF("كود الاسترجاع غلط. جرب بعد {n} ثانية.", { n: w }) : T("كود الاسترجاع غلط.");
+        return;
+      }
+      return makeRecord(n1).then(function (r) {
+        lock.salt = r.salt; lock.iter = r.iter; lock.hash = r.hash;
+        lock.fails = 0; lock.until = 0; lock.resetAt = 0;
+        lockSave();
+        recCode.value = ""; recPw1.value = ""; recPw2.value = "";
+        recForm.hidden = true;
+        L.form.hidden = false;
+        unlockApp();
+        offerRecovery();
+        say(T("اتغيرت كلمة المرور. خد كود الاسترجاع الجديد."));
+      });
+    });
+  });
+
+  /* نافذة الإعدادات */
+  function renderLockDlg() {
+    var on = !!lock;
+    L.setup.hidden = on;
+    L.manage.hidden = !on;
+    L.btn.classList.toggle("on", on);
+    byId("lockStatus").textContent = on ? T("القفل مفعّل") : T("القفل مش مفعّل");
+    if (on) {
+      L.bioState.textContent = lock.bio ? T("مفعّلة") : T("مش مفعّلة");
+      L.bioBtn.textContent = lock.bio ? T("إيقاف") : T("تفعيل");
+      L.auto.value = String(lock.auto);
+      byId("lkRecState").textContent = lock.rec ? T("متسجل") : T("مش متسجل");
+      byId("lkRecBtn").textContent = lock.rec ? T("كود جديد") : T("إنشاء كود");
+    }
+  }
+  function openLockDlg() {
+    renderLockDlg();
+    [L.err1, L.err2, L.err3, L.bioMsg].forEach(function (n) { msg(n, ""); });
+    L.dlg.hidden = false;
+  }
+  function closeLockDlg() {
+    L.dlg.hidden = true;
+    [L.pw1, L.pw2, L.cur, L.new1, L.new2, L.offPw].forEach(function (n) { n.value = ""; });
+    L.chDet.open = false;
+    L.offDet.open = false;
+  }
+  L.btn.addEventListener("click", openLockDlg);
+  L.close.addEventListener("click", closeLockDlg);
+  L.dlgBack.addEventListener("click", closeLockDlg);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !L.dlg.hidden) closeLockDlg();
+  });
+
+  L.setup.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var a = L.pw1.value, b = L.pw2.value;
+    if (a.length < 4) { msg(L.err1, T("كلمة المرور لازم تكون 4 حروف أو أرقام على الأقل.")); return; }
+    if (a !== b) { msg(L.err1, T("كلمتين المرور مش متطابقين.")); return; }
+    makeRecord(a).then(function (rec) {
+      lock = { salt: rec.salt, iter: rec.iter, hash: rec.hash, bio: null, auto: 60, fails: 0, until: 0, rec: null, resetAt: 0 };
+      lockSave();
+      L.pw1.value = ""; L.pw2.value = "";
+      msg(L.err1, "");
+      renderLockDlg();
+      msg(L.bioMsg, T("اتفعّل القفل. تقدر دلوقتي تفعّل البصمة كمان."), true);
+      hideKeyboard();
+      offerRecovery();
+    });
+  });
+
+  L.bioBtn.addEventListener("click", function () {
+    if (!lock) return;
+    if (lock.bio) {
+      lock.bio = null;
+      lockSave();
+      renderLockDlg();
+      msg(L.bioMsg, T("اتوقفت البصمة."), true);
+      return;
+    }
+    if (!bioSupported()) { msg(L.bioMsg, T(HTTPS_MSG)); return; }
+    msg(L.bioMsg, "");
+    bioEnroll().then(function () {
+      renderLockDlg();
+      msg(L.bioMsg, T("اتفعّلت البصمة."), true);
+    }).catch(function (e) {
+      msg(L.bioMsg, bioErrText(e));
+    });
+  });
+
+  L.auto.addEventListener("change", function () {
+    if (!lock) return;
+    lock.auto = parseInt(L.auto.value, 10);
+    lockSave();
+  });
+
+  L.change.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var n1 = L.new1.value, n2 = L.new2.value;
+    if (n1.length < 4) { msg(L.err2, T("الكلمة الجديدة لازم تكون 4 حروف أو أرقام على الأقل.")); return; }
+    if (n1 !== n2) { msg(L.err2, T("كلمتين المرور الجديدتين مش متطابقين.")); return; }
+    verifyPw(L.cur.value).then(function (ok) {
+      if (!ok) { msg(L.err2, T("كلمة المرور الحالية غلط.")); return; }
+      return makeRecord(n1).then(function (rec) {
+        lock.salt = rec.salt; lock.iter = rec.iter; lock.hash = rec.hash;
+        lock.fails = 0; lock.until = 0;
+        lockSave();
+        L.cur.value = ""; L.new1.value = ""; L.new2.value = "";
+        msg(L.err2, T("اتغيرت كلمة المرور."), true);
+        hideKeyboard();
+      });
+    });
+  });
+
+  L.offForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    verifyPw(L.offPw.value).then(function (ok) {
+      if (!ok) { msg(L.err3, T("كلمة المرور غلط.")); return; }
+      lock = null;
+      lockSave();
+      L.offPw.value = "";
+      msg(L.err3, "");
+      document.documentElement.removeAttribute("data-locked");
+      L.offDet.open = false;
+      renderLockDlg();
+      hideKeyboard();
+    });
+  });
+
+  L.now.addEventListener("click", lockNow);
+
+  /* قفل تلقائي لما التطبيق يروح في الخلفية */
+  var hiddenAt = 0;
+  document.addEventListener("visibilitychange", function () {
+    if (!lock) return;
+    if (document.hidden) {
+      hiddenAt = Date.now();
+      if (lock.auto === 0 && !isLocked()) lockNow();
+    } else if (!isLocked() && lock.auto > 0 && hiddenAt && Date.now() - hiddenAt >= lock.auto * 1000) {
+      lockNow();
+    } else if (isLocked()) {
+      setTimeout(function () { bioUnlock(true); }, 350);
+    }
+  });
+
+  /* ---------- نسخة احتياطية ---------- */
+  function cleanItem(x) {
+    if (!x || typeof x !== "object") return null;
+    var amt = Number(x.amount);
+    if (!isFinite(amt) || amt <= 0) return null;
+    if (typeof x.date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(x.date)) return null;
+    var cat = (typeof x.cat === "string" && (catById[x.cat] || (x.cat.indexOf("c:") === 0 && x.cat.length > 2))) ? x.cat : "other";
+    return {
+      id: String(x.id || (Date.now().toString(36) + Math.random().toString(36).slice(2, 7))),
+      amount: Math.round(amt * 100) / 100,
+      cat: cat,
+      note: typeof x.note === "string" ? x.note.slice(0, 80) : "",
+      date: x.date
+    };
+  }
+
+  /* ---------- تصدير واستيراد البيانات (من الإعدادات) ---------- */
+  function saveBlob(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+  }
+  /* بيئة التشغيل: تطبيقات APK (WebView) ممكن تقفل لو جربنا تنزيل ملف blob */
+  var UA = navigator.userAgent || "";
+  var IS_ANDROID = /Android/i.test(UA);
+  var IS_WEBVIEW = IS_ANDROID && (/;\s*wv\)/.test(UA) ||
+    (/Version\/4\.0/.test(UA) && !/SamsungBrowser|OPR\/|EdgA|Firefox|CriOS/.test(UA)));
+
+  /* تصدير إلى ملف JSON */
+  function backupPayload() {
+    return {
+      json: JSON.stringify({
+        app: "masrofaty", version: 1, exported: new Date().toISOString(),
+        items: items, settings: { cur: settings.cur, budget: settings.budget }
+      }),
+      name: "masrofaty-backup-" + today() + ".json"
+    };
+  }
+  function shareBackupFile(b, onDone, onFail) {
+    if (!(navigator.share && navigator.canShare)) return false;
+    var types = ["application/json", "text/plain"], file = null;
+    for (var i = 0; i < types.length && !file; i++) {
+      try {
+        var f = new File([b.json], b.name, { type: types[i] });
+        if (navigator.canShare({ files: [f] })) file = f;
+      } catch (e) {}
+    }
+    if (!file) return false;
+    navigator.share({ files: [file], title: b.name }).then(onDone).catch(function (e) {
+      if (e && e.name === "AbortError") return;
+      onFail();
+    });
+    return true;
+  }
+
+  /* النسخة كنص: بتشتغل في أي جهاز، من غير تنزيل ملفات */
+  var txtDlg = byId("txtDlg"), txtArea = byId("txtArea");
+  function openTextDlg(text) { txtArea.value = text || ""; txtDlg.hidden = false; }
+  function closeTextDlg() { txtDlg.hidden = true; txtArea.value = ""; }
+  byId("txtClose").addEventListener("click", closeTextDlg);
+  byId("txtBack").addEventListener("click", closeTextDlg);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !txtDlg.hidden) closeTextDlg(); });
+  byId("txtCopy").addEventListener("click", function () {
+    var txt = txtArea.value;
+    if (!txt) return;
+    function ok() { say(T("اتنسخ النص.")); }
+    function fb() {
+      txtArea.focus();
+      txtArea.select();
+      var done = false;
+      try { done = document.execCommand("copy"); } catch (e) { done = false; }
+      if (done) ok(); else say(T("ما قدرتش أنسخ النص."));
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fb); else fb();
+  });
+  byId("txtImport").addEventListener("click", function () {
+    if (!txtArea.value.trim()) return;
+    var n = importText(txtArea.value, true);
+    if (n > 0) closeTextDlg();
+  });
+
+  function exportJson() {
+    if (items.length === 0 && !settings.budget) { say(T("مفيش بيانات تتصدّر لسه.")); return; }
+    var b = backupPayload();
+    if (IS_WEBVIEW) {
+      if (!shareBackupFile(b, function () {}, function () { openTextDlg(b.json); })) openTextDlg(b.json);
+      return;
+    }
+    try {
+      saveBlob(new Blob([b.json], { type: "application/json" }), b.name);
+      say(T("اتنزّل ملف النسخة الاحتياطية."));
+    } catch (e) { openTextDlg(b.json); }
+  }
+
+  /* رفع إلى Google Drive: عن طريق قايمة المشاركة (من غير تسجيل دخول جوجل جوه التطبيق) */
+  var driveDlg = byId("driveDlg");
+  function closeDriveDlg() { driveDlg.hidden = true; }
+  byId("driveDone").addEventListener("click", closeDriveDlg);
+  byId("driveBack").addEventListener("click", closeDriveDlg);
+  byId("driveOpen").addEventListener("click", function () { setTimeout(closeDriveDlg, 100); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDriveDlg(); });
+
+  function uploadToDrive() {
+    if (items.length === 0 && !settings.budget) { say(T("مفيش بيانات تتصدّر لسه.")); return; }
+    var b = backupPayload();
+    function fallback() {
+      if (IS_WEBVIEW) { openTextDlg(b.json); return; }
+      try { saveBlob(new Blob([b.json], { type: "application/json" }), b.name); }
+      catch (e) { openTextDlg(b.json); return; }
+      byId("driveName").textContent = b.name;
+      driveDlg.hidden = false;
+    }
+    if (!shareBackupFile(b, function () { say(T("اتبعتت النسخة. اتأكد إنك اخترت Drive.")); }, fallback)) fallback();
+  }
+
+  /* استيراد من ملف JSON: بيضيف المصاريف الجديدة بس */
+  function importText(str, fromText) {
+    var obj = null;
+    try { obj = JSON.parse(String(str).replace(/^\uFEFF/, "").trim()); } catch (e) { obj = null; }
+    if (!obj || !Array.isArray(obj.items)) {
+      say(T(fromText ? "النص ده مش نسخة احتياطية من التطبيق." : "الملف ده مش نسخة احتياطية من التطبيق."));
+      return -1;
+    }
+    var wasEmpty = items.length === 0;
+    var have = {};
+    items.forEach(function (it) { have[it.id] = true; });
+    var added = 0;
+    obj.items.forEach(function (raw) {
+      var it = cleanItem(raw);
+      if (it && !have[it.id]) { have[it.id] = true; items.push(it); added++; }
+    });
+    if (wasEmpty && obj.settings && typeof obj.settings === "object") {
+      if (curById[obj.settings.cur]) settings.cur = obj.settings.cur;
+      if (isFinite(obj.settings.budget) && obj.settings.budget > 0) settings.budget = Number(obj.settings.budget);
+      saveSettings();
+    }
+    save();
+    view = monthOf(today());
+    buildChips(CATS[0].id);
+    render();
+    updateAbout();
+    say(added > 0 ? TF("اتضاف {n} مصروف من النسخة الاحتياطية.", { n: added }) : T("مفيش مصاريف جديدة تتضاف."));
+    return added;
+  }
+  function importPicked(input) {
+    var f = input.files && input.files[0];
+    if (!f) return;
+    var fr = new FileReader();
+    fr.onload = function () { input.value = ""; importText(fr.result, false); };
+    fr.onerror = function () { say(T("ما قدرتش أقرا الملف.")); };
+    fr.readAsText(f);
+  }
+  L.bkFile.addEventListener("change", function () { importPicked(L.bkFile); });
+  byId("bkFileAny").addEventListener("change", function () { importPicked(byId("bkFileAny")); });
+  byId("dxJson").addEventListener("click", exportJson);
+  byId("dxImport").addEventListener("click", function () { L.bkFile.click(); });
+  byId("dxDriveUp").addEventListener("click", uploadToDrive);
+  byId("dxDriveDown").addEventListener("click", function () {
+    say(T("من شاشة اختيار الملف افتح القايمة الجانبية واختار Drive."));
+    byId("bkFileAny").click();
+  });
+
+  function initLock() {
+    lock = lockLoad();
+    if (lock) {
+      showLock();
+      setTimeout(function () { bioUnlock(true); }, 400);
+    } else {
+      document.documentElement.removeAttribute("data-locked");
+    }
+    renderLockDlg();
+  }
+
+  /* ---------- التبويبات والفلتر ---------- */
+  var tabbar = document.getElementById("tabbar");
+  var monthbar = document.getElementById("monthbar");
+  function setTab(name) {
+    Array.prototype.forEach.call(document.querySelectorAll(".view"), function (v) {
+      v.hidden = v.getAttribute("data-view") !== name;
+    });
+    Array.prototype.forEach.call(tabbar.children, function (b) {
+      var on = b.getAttribute("data-tab") === name;
+      b.classList.toggle("active", on);
+      if (on) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
+    monthbar.hidden = (name === "add" || name === "settings");
+    hideKeyboard();
+    window.scrollTo(0, 0);
+  }
+  tabbar.addEventListener("click", function (e) {
+    var b = e.target.closest(".tab");
+    if (b) setTab(b.getAttribute("data-tab"));
+  });
+  document.getElementById("filters").addEventListener("click", function (e) {
+    var b = e.target.closest(".flt");
+    if (!b) return;
+    listMode = b.getAttribute("data-mode");
+    render();
+  });
+  document.getElementById("balTiles").addEventListener("click", function () { setTab("budget"); });
+  /* ---------- اللغة والمظهر والتعريف ---------- */
+  var AR_RE = /[\u0600-\u06FF]/;
+  var SKIP_SEL = "#list,#quick,#cats,#stack,.chip,#pills,#langPills,#themePills,.toast";
+  function collapse(x) { return x.replace(/\s+/g, " ").trim(); }
+
+  function translateDom() {
+    var en = settings.lang === "en";
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var n;
+    while ((n = walker.nextNode())) {
+      var par = n.parentNode;
+      if (!par || par.nodeName === "SCRIPT" || par.nodeName === "STYLE") continue;
+      if (par.closest && par.closest(SKIP_SEL)) continue;
+      if (n.__o === undefined) {
+        if (!AR_RE.test(n.nodeValue)) continue;
+        n.__o = n.nodeValue;
+      }
+      var tr = en ? EN[collapse(n.__o)] : null;
+      if (tr) {
+        n.nodeValue = n.__o.match(/^\s*/)[0] + tr + n.__o.match(/\s*$/)[0];
+      } else {
+        n.nodeValue = n.__o;
+      }
+    }
+    Array.prototype.forEach.call(document.querySelectorAll("[placeholder],[aria-label],[title]"), function (e) {
+      if (e.closest && e.closest("#list,#quick,#cats,#stack,.chip,.toast")) return;
+      ["placeholder", "aria-label", "title"].forEach(function (a) {
+        if (!e.hasAttribute(a)) return;
+        var st = e.__a || (e.__a = {});
+        if (st[a] === undefined) {
+          var v = e.getAttribute(a);
+          if (!v || !AR_RE.test(v)) return;
+          st[a] = v;
+        }
+        var t = en ? EN[collapse(st[a])] : null;
+        e.setAttribute(a, t || st[a]);
+      });
+    });
+  }
+
+  function resolvedTheme() {
+    if (settings.theme === "light" || settings.theme === "dark") return settings.theme;
+    return (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+  }
+  function applyTheme() { document.documentElement.setAttribute("data-theme", resolvedTheme()); }
+  if (window.matchMedia) {
+    var mq = window.matchMedia("(prefers-color-scheme: dark)");
+    var onSys = function () { if (settings.theme === "system") applyTheme(); };
+    if (mq.addEventListener) mq.addEventListener("change", onSys); else if (mq.addListener) mq.addListener(onSys);
+  }
+
+  var LANGS = [{ id: "ar", label: "العربية" }, { id: "en", label: "English" }];
+  var THEMES = [{ id: "system", ar: "تلقائي" }, { id: "light", ar: "فاتح" }, { id: "dark", ar: "داكن" }];
+  var langPills = byId("langPills"), themePills = byId("themePills");
+
+  function fillPills(box, defs, labelOf, current, attr) {
+    if (box.children.length !== defs.length) {
+      box.innerHTML = "";
+      defs.forEach(function (d) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "pill";
+        b.setAttribute(attr, d.id);
+        box.appendChild(b);
+      });
+    }
+    Array.prototype.forEach.call(box.children, function (b, i) {
+      b.textContent = labelOf(defs[i]);
+      b.setAttribute("aria-pressed", String(defs[i].id === current));
+    });
+  }
+  function renderSettingsPills() {
+    fillPills(langPills, LANGS, function (d) { return d.label; }, settings.lang, "data-lang");
+    fillPills(themePills, THEMES, function (d) { return T(d.ar); }, settings.theme, "data-theme-id");
+  }
+
+  function updateAbout() {
+    var v = TF("الإصدار {v}", { v: APP_VERSION });
+    byId("aboutVer").textContent = v;
+    byId("aboutRowVer").textContent = v;
+    byId("aboutCount").textContent = fmt(items.length);
+    renderUpdateRow();
+  }
+
+  function applyLang() {
+    var en = settings.lang === "en";
+    var root = document.documentElement;
+    root.lang = en ? "en" : "ar";
+    root.dir = en ? "ltr" : "rtl";
+    document.title = T("مصاريفي");
+    translateDom();
+    byId("todayLbl").textContent = shortDay.format(new Date());
+    var chk = el.chips.querySelector("input:checked");
+    buildChips(chk ? chk.value : CATS[0].id);
+    renderSettingsPills();
+    updateAbout();
+    renderLockDlg();
+    render();
+  }
+
+  langPills.addEventListener("click", function (e) {
+    var b = e.target.closest(".pill");
+    if (!b) return;
+    var id = b.getAttribute("data-lang");
+    if (id === settings.lang) return;
+    settings.lang = id;
+    saveSettings();
+    applyLang();
+  });
+  themePills.addEventListener("click", function (e) {
+    var b = e.target.closest(".pill");
+    if (!b) return;
+    settings.theme = b.getAttribute("data-theme-id");
+    saveSettings();
+    applyTheme();
+    renderSettingsPills();
+  });
+
+  var aboutDlg = byId("aboutDlg");
+  byId("aboutBtn").addEventListener("click", function () { updateAbout(); aboutDlg.hidden = false; });
+  byId("aboutClose").addEventListener("click", function () { aboutDlg.hidden = true; });
+  byId("aboutBack").addEventListener("click", function () { aboutDlg.hidden = true; });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") aboutDlg.hidden = true; });
+
+  setTab("home");
+
+  /* ---------- نظام التحديثات ---------- */
+  /* بيقارن APP_VERSION بالإصدار الموجود في version.json على استضافتك. التحديث بيتم فوق نفس التطبيق
+     (نفس العنوان = نفس بيانات المتصفح)، فبيانات المستخدم ما بتتأثرش. */
+  var META_KEY = "masrofaty-meta-v1";
+  var memoryMeta = null;
+  function metaLoad() {
+    var o = null;
+    if (!canStore) o = memoryMeta;
+    else { try { o = JSON.parse(localStorage.getItem(META_KEY) || "null"); } catch (e) { o = null; } }
+    return (o && typeof o === "object") ? o : {};
+  }
+  var meta = metaLoad();
+  function metaSave() {
+    memoryMeta = meta;
+    if (!canStore) return;
+    try { localStorage.setItem(META_KEY, JSON.stringify(meta)); } catch (e) {}
+  }
+
+  function parseVer(v) {
+    return String(v || "").replace(/^v/i, "").split(".").map(function (x) { return parseInt(x, 10) || 0; });
+  }
+  function cmpVer(a, b) {
+    var x = parseVer(a), y = parseVer(b), n = Math.max(x.length, y.length);
+    for (var i = 0; i < n; i++) {
+      var d = (x[i] || 0) - (y[i] || 0);
+      if (d) return d > 0 ? 1 : -1;
+    }
+    return 0;
+  }
+  var upd = { info: null, busy: false, waitUnlock: false };
+  var UPD_CHECK_EVERY = 6 * 60 * 60 * 1000, UPD_SNOOZE = 24 * 60 * 60 * 1000;
+  function updEnabled() { return !!UPDATE_MANIFEST_URL; }
+
+  function fetchManifest() {
+    return new Promise(function (resolve, reject) {
+      var ctl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctl) ctl.abort(); reject(new Error("timeout")); }, 8000);
+      var sep = UPDATE_MANIFEST_URL.indexOf("?") < 0 ? "?" : "&";
+      fetch(UPDATE_MANIFEST_URL + sep + "t=" + Date.now(), { cache: "no-store", signal: ctl ? ctl.signal : undefined })
+        .then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.json(); })
+        .then(function (j) { clearTimeout(timer); resolve(j); }, function (e) { clearTimeout(timer); reject(e); });
+    });
+  }
+  function cleanManifest(j) {
+    if (!j || typeof j !== "object" || typeof j.version !== "string") return null;
+    var v = j.version.replace(/^v/i, "").trim();
+    if (!/^\d+(\.\d+)*$/.test(v)) return null;
+    function list(x) {
+      if (Array.isArray(x)) return x.map(String).filter(Boolean).slice(0, 12);
+      return (typeof x === "string" && x) ? [x] : [];
+    }
+    return { version: v, notes: list(j.notes), notesEn: list(j.notes_en), url: typeof j.url === "string" ? j.url : "", mandatory: j.mandatory === true };
+  }
+  function sameOrigin(u) {
+    try { return new URL(u, location.href).origin === location.origin; } catch (e) { return false; }
+  }
+
+  var updDlg = byId("updDlg");
+  function renderUpdateRow() {
+    var st = byId("updState");
+    if (!st) return;
+    var newer = !!(upd.info && cmpVer(upd.info.version, APP_VERSION) > 0);
+    st.classList.toggle("hot", newer);
+    st.textContent = !updEnabled() ? T("غير مفعّل")
+      : newer ? TF("تحديث متاح: {v}", { v: upd.info.version })
+      : TF("الإصدار {v}", { v: APP_VERSION });
+  }
+  function showUpdateDialog(m) {
+    byId("updVer").textContent = TF("الإصدار {v} متاح (إنت على {c})", { v: m.version, c: APP_VERSION });
+    var notes = (settings.lang === "en" && m.notesEn.length) ? m.notesEn : m.notes;
+    var ul = byId("updNotes");
+    ul.innerHTML = "";
+    notes.forEach(function (n) { var li = document.createElement("li"); li.textContent = n; ul.appendChild(li); });
+    ul.hidden = notes.length === 0;
+    byId("updLater").hidden = m.mandatory;
+    byId("updNow").disabled = false;
+    updDlg.setAttribute("data-mandatory", m.mandatory ? "1" : "");
+    updDlg.hidden = false;
+  }
+  function postponeUpdate() {
+    if (updDlg.getAttribute("data-mandatory")) return;
+    if (upd.info) { meta.snoozeVersion = upd.info.version; meta.snoozeUntil = Date.now() + UPD_SNOOZE; metaSave(); }
+    updDlg.hidden = true;
+    say(T("تمام، هنفكّرك بعدين. تقدر تحدّث في أي وقت من الإعدادات."));
+  }
+
+  function checkForUpdate(manual) {
+    if (!updEnabled()) { if (manual) say(T("نظام التحديثات مش مفعّل في النسخة دي.")); return; }
+    if (upd.busy) return;
+    if (!manual) {
+      if (isLocked()) { upd.waitUnlock = true; return; }
+      if (navigator.onLine === false) return;
+    }
+    upd.busy = true;
+    if (manual) say(T("جاري البحث عن تحديث..."));
+    fetchManifest().then(function (j) {
+      upd.busy = false;
+      meta.lastCheck = Date.now(); metaSave();
+      var m = cleanManifest(j);
+      if (!m) { if (manual) say(T("ما قدرتش أقرا بيانات التحديث.")); return; }
+      if (cmpVer(m.version, APP_VERSION) > 0) {
+        upd.info = m;
+        renderUpdateRow();
+        var snoozed = !manual && !m.mandatory && meta.snoozeVersion === m.version && meta.snoozeUntil > Date.now();
+        if (!snoozed) showUpdateDialog(m);
+      } else {
+        upd.info = null;
+        renderUpdateRow();
+        if (manual) say(T("إنت على آخر إصدار."));
+      }
+    }).catch(function () {
+      upd.busy = false;
+      if (manual) say(T("ما قدرتش أوصل لخادم التحديثات. اتأكد من الإنترنت وجرب تاني."));
+    });
+  }
+
+  function applyUpdate() {
+    var m = upd.info;
+    if (!m) return;
+    var inPlace = /^https?:$/.test(location.protocol) && (!m.url || sameOrigin(m.url));
+    if (inPlace) {
+      /* تحديث فوق نفس التطبيق: بنجدّد الملف من السيرفر ونعمل إعادة تحميل. البيانات في نفس المكان فبتفضل زي ما هي */
+      meta.pending = m.version; metaSave();
+      byId("updNow").disabled = true;
+      say(T("جاري التحديث..."));
+      var base = location.href.split("#")[0];
+      var go = function () { location.reload(); };
+      try { fetch(base, { cache: "reload" }).then(go, go); } catch (e) { go(); }
+    } else if (m.url) {
+      /* التطبيق شغال من ملف أو APK: بنفتح صفحة تحميل النسخة الجديدة */
+      var a = document.createElement("a");
+      a.href = m.url; a.target = "_blank"; a.rel = "noopener noreferrer";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      say(T("افتح الصفحة ونزّل النسخة الجديدة وثبّتها فوق القديمة."));
+    } else {
+      say(T("مفيش رابط تحديث متاح."));
+    }
+  }
+
+  byId("updNow").addEventListener("click", applyUpdate);
+  byId("updLater").addEventListener("click", postponeUpdate);
+  byId("updBack").addEventListener("click", postponeUpdate);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !updDlg.hidden) postponeUpdate(); });
+  byId("updBtn").addEventListener("click", function () {
+    if (upd.info && cmpVer(upd.info.version, APP_VERSION) > 0) showUpdateDialog(upd.info);
+    else checkForUpdate(true);
+  });
+  function shouldAutoCheck() { return updEnabled() && (!meta.lastCheck || Date.now() - meta.lastCheck > UPD_CHECK_EVERY); }
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden && shouldAutoCheck()) checkForUpdate(false);
+  });
+  function afterBootVersionCheck() {
+    if (meta.pending) {
+      if (cmpVer(APP_VERSION, meta.pending) < 0) say(T("لسه النسخة القديمة. جرب تاني بعد دقيقة، أو اقفل التطبيق وافتحه."));
+      meta.pending = null;
+    }
+    if (meta.lastVersion && meta.lastVersion !== APP_VERSION && cmpVer(APP_VERSION, meta.lastVersion) > 0) {
+      say(TF("اتحدّث التطبيق للإصدار {v}. بياناتك زي ما هي ({n} مصروف).", { v: APP_VERSION, n: items.length }));
+    }
+    meta.lastVersion = APP_VERSION;
+    metaSave();
+  }
+
+  initLock();
+  applyTheme();
+  applyLang();
+  showStorageNote();
+  afterBootVersionCheck();
+  if (shouldAutoCheck()) setTimeout(function () { checkForUpdate(false); }, 2500);
+})();
+</script>
+</body>
+</html>
