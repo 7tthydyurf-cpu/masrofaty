@@ -1,10 +1,10 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "notes": [
-    "النسخة الأولى"
+    "تجربة نظام التحديثات: لو شفت هذه الرسالة فالتحديث يشتغل ✅"
   ],
   "notes_en": [
-    "First release"
+    "Update system test: if you see this message, updates work ✅"
   ],
   "url": "https://7tthydyurf-cpu.github.io/masrofaty/",
   "mandatory": false
