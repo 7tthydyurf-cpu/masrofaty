@@ -1,10 +1,12 @@
 {
-  "version": "1.1",
+  "version": "1.2",
   "notes": [
-    "تجربة نظام التحديثات: لو شفت هذه الرسالة فالتحديث يشتغل ✅"
+    "اختبار التحديث الثاني داخل التطبيق",
+    "تحسينات عامة"
   ],
   "notes_en": [
-    "Update system test: if you see this message, updates work ✅"
+    "Second in-app update test",
+    "General improvements"
   ],
   "url": "https://7tthydyurf-cpu.github.io/masrofaty/",
   "mandatory": false
